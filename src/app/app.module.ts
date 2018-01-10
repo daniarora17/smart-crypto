@@ -3,11 +3,17 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
+import { LeftNavComponent } from './left-nav/left-nav.component';
+import { HeaderComponent } from './header/header.component';
+import { DataTableComponent } from './data-table/data-table.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LeftNavComponent,
+    HeaderComponent,
+    DataTableComponent
   ],
   imports: [
     BrowserModule
