@@ -1,3 +1,6 @@
-<p>
-  left-nav works!
-</p>
+<div class="left-nav-main">
+  <span class="left-nav-title">Select Coin, You wish to compare!!</span>
+  <ul class="left-nav-coin-list">
+    <li class="left-nav-coin-item" *ngFor="let i of coinList"><a>{{i.name}}</a></li>
+  </ul>
+</div>
