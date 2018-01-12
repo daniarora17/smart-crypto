@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class SharedServiceService {
-  coinKey: string = '';
+  coinKey: string;
   constructor() { }
 
-  setCoinKey(key) => {
+  setCoinKey = (key: string) => {
     console.log(key, 'came selecetedd >>>');
     return this.coinKey = key;
   }

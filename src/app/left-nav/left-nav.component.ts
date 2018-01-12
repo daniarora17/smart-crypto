@@ -1,11 +1,10 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { SharedService } from './shared-service.service'
+import { SharedServiceService } from '../shared-service.service';
 
 @Component({
   selector: 'app-left-nav',
   templateUrl: './left-nav.component.html',
-  styleUrls: ['./left-nav.component.less'],
-  providers: ['SharedService']
+  styleUrls: ['./left-nav.component.less']
 })
 export class LeftNavComponent implements OnInit {
   @Output() selectedCoin = new EventEmitter<string>();
@@ -15,21 +14,20 @@ export class LeftNavComponent implements OnInit {
       'name': 'Bit Coin'
     },
     {
-      'key': 'rip',
+      'key': 'xrp',
       'name': 'Ripple'
     }
   ];
-  // selectedCoin = {};
 
-  constructor( private _sharedService: SharedService) { }
+  constructor(private _sharedService: SharedServiceService) { }
 
   ngOnInit() {
   }
 
-  getSelectedCoin = (coin : string) => {
+  getSelectedCoin = (coin) => {
     // this.selectedCoin = coin;
-    this.selectedCoin.emit(coin);
-    this._sharedService.getCoinKey(coin.key);
+    // this.selectedCoin.emit(coin);
+    this._sharedService.setCoinKey(coin.key);
     console.log(coin, 'got selectedd>>>>');
   }
 }

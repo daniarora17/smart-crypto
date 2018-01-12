@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { LeftNavComponent } from './left-nav/left-nav.component';
 import { HeaderComponent } from './header/header.component';
 import { DataTableComponent } from './data-table/data-table.component';
-import { SharedService } from './shared-service.service';
+import { SharedServiceService } from './shared-service.service';
 
 
 
@@ -26,7 +26,7 @@ import { SharedService } from './shared-service.service';
     HttpModule,
     HttpClientModule
   ],
-  providers: [SharedService],
+  providers: [SharedServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

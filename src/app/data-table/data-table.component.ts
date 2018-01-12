@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SharedServiceService } from '../shared-service.service';
+
 
 @Component({
   selector: 'app-data-table',
@@ -7,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DataTableComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _sharedService: SharedServiceService) { }
 
   ngOnInit() {
+    // console.log(this._sharedService.coinKey, 'coinnn keeyyy>>>');
   }
 
 }
