@@ -1,8 +1,7 @@
 import { Component, OnInit, Input, OnChanges, AfterViewInit, ViewChild } from '@angular/core';
 import { SharedServiceService } from '../shared-service.service';
+import { Table } from '../Table';
 import { MatTableDataSource, MatSort } from '@angular/material';
-import { AfterContentInit } from '@angular/core/src/metadata/lifecycle_hooks';
-
 
 @Component({
   selector: 'app-data-table',
@@ -35,14 +34,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
   }
 }
 
-export interface Element {
-  name: string;
-  position: number;
-  buy: number;
-  sell: number;
-}
-
-const ELEMENT_DATA: Element[] = [
+const ELEMENT_DATA: Table[] = [
   { position: 1, name: 'Hydrogen', buy: 1.0079, sell: 111 },
   { position: 2, name: 'Helium', buy: 4.0026, sell: 111 },
   { position: 3, name: 'Lithium', buy: 6.941, sell: 222 },
