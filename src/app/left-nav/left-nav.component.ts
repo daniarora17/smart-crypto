@@ -7,7 +7,7 @@ import { SharedServiceService } from '../shared-service.service';
   styleUrls: ['./left-nav.component.less']
 })
 export class LeftNavComponent implements OnInit {
-  @Output() selectedCoin = new EventEmitter<string>();
+  @Output() coinClicked = new EventEmitter<any>();
   coinList: Array<any> = [
     {
       'key': 'btc',
@@ -25,8 +25,7 @@ export class LeftNavComponent implements OnInit {
   }
 
   getSelectedCoin = (coin) => {
-    // this.selectedCoin = coin;
-    // this.selectedCoin.emit(coin);
+    this.coinClicked.emit(coin);
     this._sharedService.setCoinKey(coin.key);
     console.log(coin, 'got selectedd>>>>');
   }

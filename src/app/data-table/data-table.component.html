@@ -1,3 +1,32 @@
-<p>
-  data-table works!
-</p>
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource" matSort>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+    </ng-container>
+
+    <!-- Coin Exchange Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Coin Exchange </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+    </ng-container>
+
+    <!-- Buy Column -->
+    <ng-container matColumnDef="buy">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Buy Rate(INR)</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.buy}} </mat-cell>
+    </ng-container>
+
+    <!-- Sell Column -->
+    <ng-container matColumnDef="sell">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Sell Rate(INR)</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.sell}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
+
