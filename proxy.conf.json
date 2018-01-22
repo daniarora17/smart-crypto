@@ -1,0 +1,10 @@
+{
+    "/api": {
+        "target": "https://www.buyucoin.com/api/v1/btc",
+        "secure": false,
+        "pathRewrite": {
+            "^/api": ""
+        },
+        "changeOrigin": true
+    }
+}

@@ -31,6 +31,16 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
     // console.log(changes, 'changes>>>>>.');
     this.coinKey = changes.selectedCoin.currentValue;
     console.log(this.coinKey, 'vvccchhgvcgfhc>>>');
+    // this.buyCoinData();
+    this._sharedService.allCoinObservable.subscribe(result => {
+      console.log(result, 'results>>>>');
+    });
+  }
+
+  private buyCoinData() {
+    this._sharedService.getbuyUCoinPrice().subscribe(response => {
+      console.log(response, 'buycoin response>>>');
+    });
   }
 }
 
