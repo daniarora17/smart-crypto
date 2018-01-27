@@ -1,10 +1,43 @@
 {
-    "/api": {
-        "target": "https://www.buyucoin.com/api/v1/btc",
+    "/buyUCoin": {
+        "target": "https://www.buyucoin.com/api/v1/crypto/",
         "secure": false,
         "pathRewrite": {
-            "^/api": ""
+            "^/buyUCoin": ""
+        },
+        "changeOrigin": true
+    },
+    "/bitStampBtcUsd": {
+        "target": "https://www.bitstamp.net/api/v2/ticker/btcusd/",
+        "secure": false,
+        "pathRewrite": {
+            "^/bitStampBtcUsd": ""
+        },
+        "changeOrigin": true
+    },
+    "/bitStampLtcUsd": {
+        "target": "https://www.bitstamp.net/api/v2/ticker/ltcusd/",
+        "secure": false,
+        "pathRewrite": {
+            "^/bitStampLtcUsd": ""
+        },
+        "changeOrigin": true
+    },
+    "/bitStampXrpUsd": {
+        "target": "https://www.bitstamp.net/api/v2/ticker/xrpusd/",
+        "secure": false,
+        "pathRewrite": {
+            "^/bitStampXrpUsd": ""
+        },
+        "changeOrigin": true
+    },
+    "/bitStampEthUsd": {
+        "target": "https://www.bitstamp.net/api/v2/ticker/ethusd/",
+        "secure": false,
+        "pathRewrite": {
+            "^/bitStampEthUsd": ""
         },
         "changeOrigin": true
     }
+    
 }

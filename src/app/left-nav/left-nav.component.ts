@@ -16,6 +16,30 @@ export class LeftNavComponent implements OnInit {
     {
       'key': 'xrp',
       'name': 'Ripple'
+    },
+    {
+      'key': 'ltc',
+      'name': 'Lite Coin'
+    },
+    {
+      'key': 'eth',
+      'name': 'Ethereum'
+    },
+    {
+      'key': 'bch',
+      'name': 'Bit Coin Cash'
+    },
+    {
+      'key': 'omg',
+      'name': 'OmiseGo'
+    },
+    {
+      'key': 'qtum',
+      'name': 'Qtum'
+    },
+    {
+      'key': 'gnt',
+      'name': 'Golem'
     }
   ];
 
