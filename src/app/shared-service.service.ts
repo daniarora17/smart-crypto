@@ -42,8 +42,8 @@ export class SharedServiceService {
       .catch((error: any) => 'CoinDelta Server error'),
     this.http.get(this.allCoinUrl.zebPay).map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error || 'ZebPay Server error')),
-    this.http.get(this.allCoinUrl.koinex).map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error || 'Koinex Server error')),
+    // this.http.get(this.allCoinUrl.koinex).map((res: Response) => res.json())
+    //   .catch((error: any) => Observable.throw(error || 'Koinex Server error')),
     this.http.get(this.allCoinUrl.bitStampltcUsd).map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error || 'BItStamp Server error')),
     this.http.get(this.allCoinUrl.bitStampbtcUsd).map((res: Response) => res.json())
@@ -52,8 +52,8 @@ export class SharedServiceService {
       .catch((error: any) => Observable.throw(error || 'BItStamp Server error')),
     this.http.get(this.allCoinUrl.bitStampethUsd).map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error || 'BItStamp Server error')),
-    this.http.get(this.allCoinUrl.cryptopiaUsd).map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error || 'Cryptopia Server error')),
+    // this.http.get(this.allCoinUrl.cryptopiaUsd).map((res: Response) => res.json())
+    //   .catch((error: any) => Observable.throw(error || 'Cryptopia Server error')),
     this.http.get(this.allCoinUrl.throughbitbtc).map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error || 'through bit Server error')),
     this.http.get(this.allCoinUrl.throughbiteth).map((res: Response) => res.json())

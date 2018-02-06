@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   private leftNav: LeftNavComponent;
   selectedCoinKey: string;
   ngOnInit() {
-
+    this.selectedCoinKey = 'btc';
   }
 
   coinClicked(key: any) {

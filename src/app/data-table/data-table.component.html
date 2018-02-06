@@ -16,13 +16,13 @@
     <!-- Buy Column -->
     <ng-container matColumnDef="buy">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Buy Rate(INR)</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.buy}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.buy | number:'.3-3'}} </mat-cell>
     </ng-container>
 
     <!-- Sell Column -->
     <ng-container matColumnDef="sell">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Sell Rate(INR)</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.sell}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.sell | number:'.3-3'}} </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
