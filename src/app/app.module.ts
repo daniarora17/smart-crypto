@@ -1,6 +1,6 @@
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatIconRegistry, MatIconModule, MatTableModule, MatSortModule } from '@angular/material';
+import { MatIconRegistry, MatIconModule, MatTableModule, MatSortModule, MatProgressSpinnerModule } from '@angular/material';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -27,6 +27,7 @@ import { SharedServiceService } from './shared-service.service';
     HttpClientModule,
     MatTableModule,
     MatSortModule,
+    MatProgressSpinnerModule,
     BrowserAnimationsModule
   ],
   providers: [SharedServiceService],

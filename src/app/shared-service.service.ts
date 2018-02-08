@@ -29,8 +29,8 @@ export class SharedServiceService {
     flitpaybtc: 'https://intercom.flitlancecdn.com/welcome/bit_rate',
     pocketBits: 'https://pocketbits.in/Index/getBalanceRates',
     bitBns: 'https://bitbns.com/order/getTickerAll',
-    cryptocompare: 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,DASH,LTC,XRP,BTC,OMG,IOTA,QTUM,GNT,NEO,DOGE,ARK,BAT,BCC,BTS,CLOAK,CVC,DGB,PAY&tsyms=INR',
-    coinMarketCap: 'https://api.coinmarketcap.com/v1/ticker/', // can be limited to any amunr
+    cryptocompare: 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,BCH,DASH,LTC,XRP,BTC,OMG,IOTA,QTUM,GNT,NEO,DOGE,ARK,BAT,BCC,BTS,CLOAK,CVC,DGB,PAY&tsyms=INR',
+    coinMarketCap: 'https://api.coinmarketcap.com/v1/ticker/?convert=INR&limit=6', // can be limited to any amunr
     cryptonator: 'https://api.cryptonator.com/api/full/btc-usd',
     bitStampbtcUsd: '/bitStampBtcUsd/',
     bitStampxrpUsd: '/bitStampXrpUsd/',
@@ -42,8 +42,6 @@ export class SharedServiceService {
       .catch((error: any) => 'CoinDelta Server error'),
     this.http.get(this.allCoinUrl.zebPay).map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error || 'ZebPay Server error')),
-    // this.http.get(this.allCoinUrl.koinex).map((res: Response) => res.json())
-    //   .catch((error: any) => Observable.throw(error || 'Koinex Server error')),
     this.http.get(this.allCoinUrl.bitStampltcUsd).map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error || 'BItStamp Server error')),
     this.http.get(this.allCoinUrl.bitStampbtcUsd).map((res: Response) => res.json())
@@ -52,8 +50,6 @@ export class SharedServiceService {
       .catch((error: any) => Observable.throw(error || 'BItStamp Server error')),
     this.http.get(this.allCoinUrl.bitStampethUsd).map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error || 'BItStamp Server error')),
-    // this.http.get(this.allCoinUrl.cryptopiaUsd).map((res: Response) => res.json())
-    //   .catch((error: any) => Observable.throw(error || 'Cryptopia Server error')),
     this.http.get(this.allCoinUrl.throughbitbtc).map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error || 'through bit Server error')),
     this.http.get(this.allCoinUrl.throughbiteth).map((res: Response) => res.json())
@@ -67,7 +63,9 @@ export class SharedServiceService {
     this.http.get(this.allCoinUrl.cryptonator).map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error || 'through bit Server error')),
     this.http.get(this.allCoinUrl.buyUCoin).map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error || 'through bit Server error'))
+      .catch((error: any) => Observable.throw(error || 'through bit Server error')),
+    // this.http.get(this.allCoinUrl.koinex).map((res: Response) => res.json())
+    //   .catch((error: any) => Observable.throw(error || 'Koinex Server error'))
   );
   constructor(private http: Http) { }
 

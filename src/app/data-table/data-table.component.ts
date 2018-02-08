@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, OnChanges, AfterViewInit, ViewChild } from '@angular/core';
 import { SharedServiceService } from '../shared-service.service';
 import { Table } from '../Table';
-import { CurrencyPipe } from '@angular/common';
 import { DecimalPipe } from '@angular/common';
 import { MatTableDataSource, MatSort } from '@angular/material';
 
@@ -11,9 +10,10 @@ import { MatTableDataSource, MatSort } from '@angular/material';
   styleUrls: ['./data-table.component.less']
 })
 export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
+  showSpinner: Boolean = true;
   @Input() selectedCoin: any;
   coinKey: string;
-  displayedColumns = ['position', 'name', 'buy', 'sell'];
+  displayedColumns = ['name', 'buy', 'sell'];
   dataSource = new MatTableDataSource();
   responseData: any[];
   tableData: any = [];
@@ -43,10 +43,15 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
       // this.transformData(this.coinKey, this.responseData);
       console.log(result, 'results>>>>');
       this.transformCoinDeltaResponse(this.coinKey, this.responseData[0]);
+      this.transformCryptoCompare(this.coinKey, this.responseData[9]);
+      this.transformCoinMarketCap(this.coinKey, this.responseData[10]);
+      this.transformBuyCoinData(this.coinKey, this.responseData[12]);
       if (this.coinKey === 'btc') {
         this.transformZebpayResponse(this.responseData[1]);
         this.transformBitStampBtc(this.responseData[3]);
         this.transformThroughbitBtc(this.responseData[6]);
+        this.transformFlitpayBtc(this.responseData[8]);
+        this.transformCryptonatorBtc(this.responseData[11]);
       } else if (this.coinKey === 'ltc') {
         this.transformBitStampLtc(this.responseData[2]);
       } else if (this.coinKey === 'xrp') {
@@ -55,6 +60,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
         this.transformBitStampEth(this.responseData[5]);
         this.transformThroughbitEth(this.responseData[7]);
       }
+      this.showSpinner = false;
       return this.dataSource.data = this.tableData;
     });
   }
@@ -72,10 +78,29 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
     const tempData: any = {};
     res.filter((data) => {
       if (data.MarketName.includes(keyINR)) {
-        tempData.position = 1;
         tempData.buy = data.Bid;
         tempData.sell = data.Ask;
         tempData.name = 'Coin Delta';
+        return this.tableData.push(tempData);
+      }
+    });
+  }
+
+  private transformCryptoCompare(key, res) {
+    const tempData: any = {};
+    tempData.buy = res[key.toUpperCase()].INR;
+    tempData.sell = tempData.buy - (tempData.buy * 0.01);
+    tempData.name = 'Crypto Compare';
+    return this.tableData.push(tempData);
+  }
+
+  private transformCoinMarketCap(key, res) {
+    const tempData: any = {};
+    res.filter((data) => {
+      if (data.symbol.toLowerCase() === key) {
+        tempData.buy = data.price_inr;
+        tempData.sell = tempData.buy - (tempData.buy * 0.01);
+        tempData.name = 'Coin Market';
         return this.tableData.push(tempData);
       }
     });
@@ -85,7 +110,6 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
     const tempData: any = {};
     console.log(this.tableData, 'table data>>>>');
     if (res) {
-      tempData.position = 2;
       tempData.buy = res.buy;
       tempData.sell = res.sell;
       tempData.name = 'ZebPay';
@@ -96,7 +120,6 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
   private transformBitStampLtc(res) {
     const tempData: any = {};
     if (res) {
-      tempData.position = 2;
       tempData.buy = res.bid * 65;
       tempData.sell = res.ask * 65;
       tempData.name = 'Bit Stamp(LTC)';
@@ -107,7 +130,6 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
   private transformBitStampBtc(res) {
     const tempData: any = {};
     if (res) {
-      tempData.position = 3;
       tempData.buy = res.bid * 65;
       tempData.sell = res.ask * 65;
       tempData.name = 'Bit Stamp(BTC)';
@@ -118,7 +140,6 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
   private transformBitStampXrp(res) {
     const tempData: any = {};
     if (res) {
-      tempData.position = 2;
       tempData.buy = res.bid * 65;
       tempData.sell = res.ask * 65;
       tempData.name = 'Bit Stamp(XRP)';
@@ -129,7 +150,6 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
   private transformBitStampEth(res) {
     const tempData: any = {};
     if (res) {
-      tempData.position = 2;
       tempData.buy = res.bid * 65;
       tempData.sell = res.ask * 65;
       tempData.name = 'Bit Stamp(ETH)';
@@ -140,7 +160,6 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
   private transformThroughbitBtc(res) {
     const tempData: any = {};
     if (res) {
-      tempData.position = 4;
       tempData.buy = res.data.price[0].buy_price;
       tempData.sell = res.data.price[0].sell_price;
       tempData.name = 'ThroughBit(BTC)';
@@ -151,7 +170,6 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
   private transformThroughbitEth(res) {
     const tempData: any = {};
     if (res) {
-      tempData.position = 3;
       tempData.buy = res.data.price[0].buy_price;
       tempData.sell = res.data.price[0].sell_price;
       tempData.name = 'ThroughBit(ETH)';
@@ -159,32 +177,42 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
 
-  private buyCoinData() {
-    this._sharedService.getbuyUCoinPrice().subscribe(response => {
-      console.log(response, 'buycoin response>>>');
+  private transformFlitpayBtc(res) {
+    const tempData: any = {};
+    if (res) {
+      tempData.buy = res.buyrate;
+      tempData.sell = res.sellrate;
+      tempData.name = 'FlitPay';
+      return this.tableData.push(tempData);
+    }
+  }
+
+  private transformCryptonatorBtc(res) {
+    res.ticker.markets.filter((data) => {
+      const tempData: any = {};
+      if (data.market === 'Bittrex' || data.market === 'BitFinex' || data.market === 'Livecoin' || data.market === 'Exmo') {
+        tempData.buy = data.price * 67;
+        tempData.sell = tempData.buy - (tempData.buy * 0.01);
+        tempData.name = data.market;
+        return this.tableData.push(tempData);
+      }else {
+        return;
+      }
     });
+  }
+
+  private transformBuyCoinData(key, res) {
+    const keyBuy = `${key}_buy_price`;
+    const keySell = `${key}_sell_price`;
+    const data = res.BuyUcoin_data[0];
+    const tempData: any = {};
+    if (data[keyBuy]) {
+      tempData.buy = data[keyBuy];
+      tempData.sell = data[keySell];
+      tempData.name = 'Buy U Coin';
+      return this.tableData.push(tempData);
+    }
   }
 }
 
-const ELEMENT_DATA: Table[] = [
-  { position: 1, name: 'Hydrogen', buy: 1.0079, sell: 111 },
-  { position: 2, name: 'Helium', buy: 4.0026, sell: 111 },
-  { position: 3, name: 'Lithium', buy: 6.9414576565655, sell: 222 },
-  { position: 4, name: 'Beryllium', buy: 9.012276767, sell: 222 },
-  { position: 5, name: 'Boron', buy: 105445474567.8118787678678, sell: 333 },
-  { position: 6, name: 'Carbon', buy: 12.0107, sell: 333 },
-  { position: 7, name: 'Nitrogen', buy: 14.0067, sell: 333 },
-  { position: 8, name: 'Oxygen', buy: 15.9994, sell: 444 },
-  { position: 9, name: 'Fluorine', buy: 18.9984, sell: 444 },
-  { position: 10, name: 'Neon', buy: 20.1797, sell: 444 },
-  { position: 11, name: 'Sodium', buy: 22.9897, sell: 444 },
-  { position: 12, name: 'Magnesium', buy: 24.305, sell: 555 },
-  { position: 13, name: 'Aluminum', buy: 26.9815, sell: 555 },
-  { position: 14, name: 'Silicon', buy: 28.0855, sell: 55 },
-  { position: 15, name: 'Phosphorus', buy: 30.9738, sell: 8898 },
-  { position: 16, name: 'Sulfur', buy: 32.065, sell: 9097 },
-  { position: 17, name: 'Chlorine', buy: 35.453, sell: 6767 },
-  { position: 18, name: 'Argon', buy: 39.948, sell: 9090 },
-  { position: 19, name: 'Potassium', buy: 39.0983, sell: 980787 },
-  { position: 20, name: 'Calcium', buy: 40.078, sell: 90989},
-];
+
