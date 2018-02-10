@@ -38,6 +38,14 @@
             "^/bitStampEthUsd": ""
         },
         "changeOrigin": true
+    },
+    "/koinex": {
+        "target": "https://koinex.in/api/ticker",
+        "secure": false,
+        "pathRewrite": {
+            "^/koinex": ""
+        },
+        "changeOrigin": true
     }
     
 }

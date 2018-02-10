@@ -10,6 +10,7 @@ import { LeftNavComponent } from './left-nav/left-nav.component';
 import { HeaderComponent } from './header/header.component';
 import { DataTableComponent } from './data-table/data-table.component';
 import { SharedServiceService } from './shared-service.service';
+import { BestPriceComponent } from './best-price/best-price.component';
 
 
 
@@ -18,7 +19,8 @@ import { SharedServiceService } from './shared-service.service';
     AppComponent,
     LeftNavComponent,
     HeaderComponent,
-    DataTableComponent
+    DataTableComponent,
+    BestPriceComponent
   ],
   imports: [
     BrowserModule,

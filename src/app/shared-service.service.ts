@@ -7,8 +7,11 @@ import { Observable } from 'rxjs/Observable';
 // Import RxJs required methods
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/forkJoin';
+import 'rxjs/add/observable/interval';
+
 
 
 @Injectable()
@@ -19,11 +22,10 @@ export class SharedServiceService {
     coinDelta: 'https://coindelta.com/api/v1/public/getticker/',
     zebPay: 'https://live.zebapi.com/api/v1/ticker?currencyCode=inr',
     unoCoin: 'https://www.unocoin.com/trade?all',
-    koinex: 'https://koinex.in/api/ticker',
+    koinex: '/koinex/',
     btcxIndia: 'https://api.btcxindia.com/ticker/',
     bitStampltcUsd: '/bitStampLtcUsd/',
     cryptopiaUsd: 'https://www.cryptopia.co.nz/api/GetCurrencies',
-    bittrex: 'https://bittrex.com/api/v1.1/public/getticker?market=btc-xrp',
     throughbitbtc: 'https://www.throughbit.com/tbit_ci/index.php/cryptoprice/type/btc/inr',
     throughbiteth: 'https://www.throughbit.com/tbit_ci/index.php/cryptoprice/type/eth/inr',
     flitpaybtc: 'https://intercom.flitlancecdn.com/welcome/bit_rate',
@@ -37,35 +39,38 @@ export class SharedServiceService {
     bitStampethUsd: '/bitStampEthUsd/'
   };
 
-  allCoinObservable = Observable.forkJoin(
-    this.http.get(this.allCoinUrl.coinDelta).map((res: Response) => res.json())
-      .catch((error: any) => 'CoinDelta Server error'),
-    this.http.get(this.allCoinUrl.zebPay).map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error || 'ZebPay Server error')),
-    this.http.get(this.allCoinUrl.bitStampltcUsd).map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error || 'BItStamp Server error')),
-    this.http.get(this.allCoinUrl.bitStampbtcUsd).map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error || 'BItStamp Server error')),
-    this.http.get(this.allCoinUrl.bitStampxrpUsd).map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error || 'BItStamp Server error')),
-    this.http.get(this.allCoinUrl.bitStampethUsd).map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error || 'BItStamp Server error')),
-    this.http.get(this.allCoinUrl.throughbitbtc).map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error || 'through bit Server error')),
-    this.http.get(this.allCoinUrl.throughbiteth).map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error || 'through bit Server error')),
-    this.http.get(this.allCoinUrl.flitpaybtc).map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error || 'through bit Server error')),
-    this.http.get(this.allCoinUrl.cryptocompare).map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error || 'through bit Server error')),
-    this.http.get(this.allCoinUrl.coinMarketCap).map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error || 'through bit Server error')),
-    this.http.get(this.allCoinUrl.cryptonator).map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error || 'through bit Server error')),
-    this.http.get(this.allCoinUrl.buyUCoin).map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error || 'through bit Server error')),
-    // this.http.get(this.allCoinUrl.koinex).map((res: Response) => res.json())
-    //   .catch((error: any) => Observable.throw(error || 'Koinex Server error'))
+  allCoinObservable = Observable.interval(15000)
+    .switchMap(() =>
+      Observable.forkJoin(
+        this.http.get(this.allCoinUrl.coinDelta).map((res: Response) => res.json())
+          .catch((error: any) => 'CoinDelta Server error'),
+        this.http.get(this.allCoinUrl.zebPay).map((res: Response) => res.json())
+          .catch((error: any) => Observable.throw(error || 'ZebPay Server error')),
+        this.http.get(this.allCoinUrl.bitStampltcUsd).map((res: Response) => res.json())
+          .catch((error: any) => Observable.throw(error || 'BItStamp Server error')),
+        this.http.get(this.allCoinUrl.bitStampbtcUsd).map((res: Response) => res.json())
+          .catch((error: any) => Observable.throw(error || 'BItStamp Server error')),
+        this.http.get(this.allCoinUrl.bitStampxrpUsd).map((res: Response) => res.json())
+          .catch((error: any) => Observable.throw(error || 'BItStamp Server error')),
+        this.http.get(this.allCoinUrl.bitStampethUsd).map((res: Response) => res.json())
+          .catch((error: any) => Observable.throw(error || 'BItStamp Server error')),
+        this.http.get(this.allCoinUrl.throughbitbtc).map((res: Response) => res.json())
+          .catch((error: any) => Observable.throw(error || 'through bit Server error')),
+        this.http.get(this.allCoinUrl.throughbiteth).map((res: Response) => res.json())
+          .catch((error: any) => Observable.throw(error || 'through bit Server error')),
+        this.http.get(this.allCoinUrl.flitpaybtc).map((res: Response) => res.json())
+          .catch((error: any) => Observable.throw(error || 'through bit Server error')),
+        this.http.get(this.allCoinUrl.cryptocompare).map((res: Response) => res.json())
+          .catch((error: any) => Observable.throw(error || 'through bit Server error')),
+        this.http.get(this.allCoinUrl.coinMarketCap).map((res: Response) => res.json())
+          .catch((error: any) => Observable.throw(error || 'through bit Server error')),
+        this.http.get(this.allCoinUrl.cryptonator).map((res: Response) => res.json())
+          .catch((error: any) => Observable.throw(error || 'through bit Server error')),
+        this.http.get(this.allCoinUrl.buyUCoin).map((res: Response) => res.json())
+          .catch((error: any) => Observable.throw(error || 'through bit Server error')),
+        this.http.get(this.allCoinUrl.koinex).map((res: Response) => res.json())
+          .catch((error: any) => Observable.throw(error || 'Koinex Server error'))
+    )
   );
   constructor(private http: Http) { }
 

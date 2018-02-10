@@ -32,6 +32,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnChanges(changes: any) {
+    this.showSpinner = true;
     // console.log(changes, 'changes>>>>>.');
     this.coinKey = changes.selectedCoin.currentValue;
     console.log(this.coinKey, 'vvccchhgvcgfhc>>>');
@@ -40,8 +41,8 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
       this.responseData = result;
       this.tableData = [];
       console.log(this.tableData, 'dhbdbcfjkcfj>>>');
-      // this.transformData(this.coinKey, this.responseData);
       console.log(result, 'results>>>>');
+      this.transformKoinexData(this.coinKey, this.responseData[13]);
       this.transformCoinDeltaResponse(this.coinKey, this.responseData[0]);
       this.transformCryptoCompare(this.coinKey, this.responseData[9]);
       this.transformCoinMarketCap(this.coinKey, this.responseData[10]);
@@ -62,14 +63,6 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
       }
       this.showSpinner = false;
       return this.dataSource.data = this.tableData;
-    });
-  }
-
-  private transformData(key, data) {
-    console.log(key, 'keyyy>>>');
-    console.log(data, 'gottt data>>>');
-    data.forEach(d => {
-      console.log(d, 'data>>>>>>');
     });
   }
 
@@ -120,8 +113,8 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
   private transformBitStampLtc(res) {
     const tempData: any = {};
     if (res) {
-      tempData.buy = res.bid * 65;
-      tempData.sell = res.ask * 65;
+      tempData.buy = res.bid * 70;
+      tempData.sell = res.ask * 70;
       tempData.name = 'Bit Stamp(LTC)';
       return this.tableData.push(tempData);
     }
@@ -130,8 +123,8 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
   private transformBitStampBtc(res) {
     const tempData: any = {};
     if (res) {
-      tempData.buy = res.bid * 65;
-      tempData.sell = res.ask * 65;
+      tempData.buy = res.bid * 70;
+      tempData.sell = res.ask * 70;
       tempData.name = 'Bit Stamp(BTC)';
       return this.tableData.push(tempData);
     }
@@ -140,8 +133,8 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
   private transformBitStampXrp(res) {
     const tempData: any = {};
     if (res) {
-      tempData.buy = res.bid * 65;
-      tempData.sell = res.ask * 65;
+      tempData.buy = res.bid * 70;
+      tempData.sell = res.ask * 70;
       tempData.name = 'Bit Stamp(XRP)';
       return this.tableData.push(tempData);
     }
@@ -150,8 +143,8 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
   private transformBitStampEth(res) {
     const tempData: any = {};
     if (res) {
-      tempData.buy = res.bid * 65;
-      tempData.sell = res.ask * 65;
+      tempData.buy = res.bid * 70;
+      tempData.sell = res.ask * 70;
       tempData.name = 'Bit Stamp(ETH)';
       return this.tableData.push(tempData);
     }
@@ -210,6 +203,19 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
       tempData.buy = data[keyBuy];
       tempData.sell = data[keySell];
       tempData.name = 'Buy U Coin';
+      return this.tableData.push(tempData);
+    }
+  }
+
+  private transformKoinexData(key, res) {
+    const keyUpper = key.toUpperCase();
+    const data = res.stats[keyUpper];
+    console.log(data, 'data>>>>>>>');
+    const tempData: any = {};
+    if (data) {
+      tempData.buy = data.lowest_ask;
+      tempData.sell = data.highest_bid;
+      tempData.name = 'Koinex';
       return this.tableData.push(tempData);
     }
   }
