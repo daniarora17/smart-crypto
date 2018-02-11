@@ -1,18 +1,23 @@
 .header-main {
-    background-color: rgb(202, 199, 199);
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    height: 130px;
 
     .header-logo {
         display: inline-flex;
         align-self: center;
-        margin-left: 15px;
+        background-image: url('/./assets/crypto-logo.png');
+        width: 300px;;
+        height: 100%;
+        
     }
     .header-right-list {
         list-style: none;
         display: flex;
         margin-right: 15px;
+        color: #7ec9d4;
+        text-shadow: 0.5px 0.5px black;
         > li {
             margin-right: 15px;
         }
@@ -27,8 +32,8 @@
     }
     .header-nav {
         display: inline-flex;
-        align-self: center;
-        margin-left: auto;
+        align-self: baseline;
+        margin-top: 15px;
                 
     }
 }

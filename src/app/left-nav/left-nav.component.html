@@ -1,6 +1,11 @@
 <div class="left-nav-main">
   <span class="left-nav-title">Select Coin, You wish to compare!!</span>
   <ul class="left-nav-coin-list">
-    <li class="left-nav-coin-item" *ngFor="let coin of coinList"><a (click)="getSelectedCoin(coin)">{{coin.name}}</a></li>
+    <li class="left-nav-coin-item" *ngFor="let coin of coinList">
+      <a (click)="getSelectedCoin(coin)">
+        <img [src]="coin.url">
+        <span>{{coin.name}}</span>
+      </a>
+    </li>
   </ul>
 </div>

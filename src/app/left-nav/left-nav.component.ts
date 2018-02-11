@@ -11,11 +11,13 @@ export class LeftNavComponent implements OnInit {
   coinList: Array<any> = [
     {
       'key': 'btc',
-      'name': 'Bit Coin'
+      'name': 'Bit Coin',
+      'url': './assets/bit-coin.png'
     },
     {
       'key': 'xrp',
-      'name': 'Ripple'
+      'name': 'Ripple',
+      'url': './assets/ripple.png'
     },
     {
       'key': 'ltc',

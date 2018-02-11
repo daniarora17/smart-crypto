@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-best-price',
   templateUrl: './best-price.component.html',
   styleUrls: ['./best-price.component.less']
 })
-export class BestPriceComponent implements OnInit, OnChanges {
+export class BestPriceComponent implements OnChanges {
   @Input() data: any[];
   tableData: any[];
   bestBuy: any[];
@@ -13,15 +13,9 @@ export class BestPriceComponent implements OnInit, OnChanges {
 
   constructor() { }
 
-  ngOnInit() {
-    // console.log(this.data, 'tableee datnjn  jn c a>>>');
-  }
-
   ngOnChanges(changes) {
-    console.log('chngessss>>>>', changes);
     this.tableData = changes.data.currentValue;
     this.getbestBuyPrice(this.tableData);
-    // this.getbestSellPrice(this.tableData);
     console.log(this.bestBuy, 'best buyyy>>>');
     console.log(this.bestSell, 'best sellllll>>>');
   }
@@ -33,16 +27,6 @@ export class BestPriceComponent implements OnInit, OnChanges {
         lowest = data.buy;
         return this.bestBuy = data;
       }
-      if (data.sell < lowest) {
-        lowest = data.sell;
-        return this.bestSell = data;
-      }
-    });
-  }
-
-  private getbestSellPrice(res) {
-    let lowest = Number.POSITIVE_INFINITY;
-    res.map((data) => {
       if (data.sell < lowest) {
         lowest = data.sell;
         return this.bestSell = data;
