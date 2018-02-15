@@ -16,19 +16,19 @@ export class BestPriceComponent implements OnChanges {
   ngOnChanges(changes) {
     this.tableData = changes.data.currentValue;
     this.getbestBuyPrice(this.tableData);
-    console.log(this.bestBuy, 'best buyyy>>>');
-    console.log(this.bestSell, 'best sellllll>>>');
   }
 
   private getbestBuyPrice(res) {
     let lowest = Number.POSITIVE_INFINITY;
+    let highest = Number.NEGATIVE_INFINITY;
     res.map((data) => {
       if (data.buy < lowest) {
         lowest = data.buy;
         return this.bestBuy = data;
       }
-      if (data.sell < lowest) {
-        lowest = data.sell;
+      if (data.sell > highest) {
+        highest = data.sell;
+        // console.log(highest, 'highessttt>>>');
         return this.bestSell = data;
       }
     });

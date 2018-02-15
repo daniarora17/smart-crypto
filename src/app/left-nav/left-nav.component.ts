@@ -21,27 +21,33 @@ export class LeftNavComponent implements OnInit {
     },
     {
       'key': 'ltc',
-      'name': 'Lite Coin'
+      'name': 'Lite Coin',
+      'url': './assets/litecoin.png'
     },
     {
       'key': 'eth',
-      'name': 'Ethereum'
+      'name': 'Ethereum',
+      'url': './assets/eth.png'
     },
     {
       'key': 'bch',
-      'name': 'Bit Coin Cash'
+      'name': 'Bit Coin Cash',
+      'url': './assets/bcc.png'
     },
     {
       'key': 'omg',
-      'name': 'OmiseGo'
+      'name': 'OmiseGo',
+      'url': './assets/omisego.png'
     },
     {
       'key': 'qtum',
-      'name': 'Qtum'
+      'name': 'Qtum',
+      'url': './assets/qtum.png'
     },
     {
       'key': 'gnt',
-      'name': 'Golem'
+      'name': 'Golem',
+      'url': './assets/golem.png'
     }
   ];
 
