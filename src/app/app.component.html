@@ -1,8 +1,6 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="app-main">
   <app-header></app-header>
-  <div class="data-group">
-    <app-left-nav (coinClicked) = 'coinClicked($event)' class="left-nav"></app-left-nav>
-    <app-data-table [selectedCoin] = "selectedCoinKey" class="data-table"></app-data-table>
-  </div>
+  <app-left-nav (coinClicked)='coinClicked($event)' class="left-nav"></app-left-nav>
+  <app-data-table [selectedCoin]="selectedCoinKey" class="data-table"></app-data-table>
 </div>

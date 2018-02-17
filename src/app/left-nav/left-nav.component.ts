@@ -1,13 +1,38 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { SharedServiceService } from '../shared-service.service';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition
+} from '@angular/animations';
 
 @Component({
   selector: 'app-left-nav',
   templateUrl: './left-nav.component.html',
-  styleUrls: ['./left-nav.component.less']
+  styleUrls: ['./left-nav.component.less'],
+  animations: [
+    trigger('tabState', [
+      state('inactive', style({ transform: 'translateX(0) scale(1)' })),
+      state('active', style({ transform: 'translateX(0) scale(1.2)', backgroundColor: '#085c67' })),
+      transition('inactive => active', animate('100ms ease-in')),
+      transition('active => inactive', animate('100ms ease-out'))
+    ])
+  ]
 })
 export class LeftNavComponent implements OnInit {
   @Output() coinClicked = new EventEmitter<any>();
+  state: Object = {
+    'btc': 'inactive',
+    'xrp': 'inactive',
+    'ltc': 'inactive',
+    'eth': 'inactive',
+    'bch': 'inactive',
+    'omg': 'inactive',
+    'qtum': 'inactive',
+    'gnt': 'inactive'
+  };
   coinList: Array<any> = [
     {
       'key': 'btc',
@@ -59,6 +84,10 @@ export class LeftNavComponent implements OnInit {
   getSelectedCoin = (coin) => {
     this.coinClicked.emit(coin);
     this._sharedService.setCoinKey(coin.key);
-    console.log(coin, 'got selectedd>>>>');
+    // this.state[coin.key] = this.state[coin.key] === 'inactive' ? 'active' : 'inactive';
+    // this.state[coin.key] = 'active';
+  }
+
+  toggleState() {
   }
 }
