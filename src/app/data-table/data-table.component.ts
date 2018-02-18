@@ -74,6 +74,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
         tempData.buy = data.Bid;
         tempData.sell = data.Ask;
         tempData.name = 'Coin Delta';
+        tempData.redirect = 'https://coindelta.com/market?active=BTC-INR';
         return this.tableData.push(tempData);
       }
     });
@@ -84,6 +85,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
     tempData.buy = res[key.toUpperCase()].INR;
     tempData.sell = tempData.buy - (tempData.buy * 0.01);
     tempData.name = 'Crypto Compare';
+    tempData.redirect = 'https://www.cryptocompare.com/';
     return this.tableData.push(tempData);
   }
 
@@ -94,6 +96,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
         tempData.buy = data.price_inr;
         tempData.sell = tempData.buy - (tempData.buy * 0.01);
         tempData.name = 'Coin Market';
+        tempData.redirect = 'https://coinmarketcap.com/';
         return this.tableData.push(tempData);
       }
     });
@@ -106,6 +109,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
       tempData.buy = res.buy;
       tempData.sell = res.sell;
       tempData.name = 'ZebPay';
+      tempData.redirect = 'https://www.zebpay.com/';
       return this.tableData.push(tempData);
     }
   }
@@ -116,6 +120,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
       tempData.buy = res.bid * 70;
       tempData.sell = res.ask * 70;
       tempData.name = 'Bit Stamp(LTC)';
+      tempData.redirect = 'https://www.bitstamp.net/';
       return this.tableData.push(tempData);
     }
   }
@@ -126,6 +131,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
       tempData.buy = res.bid * 70;
       tempData.sell = res.ask * 70;
       tempData.name = 'Bit Stamp(BTC)';
+      tempData.redirect = 'https://www.bitstamp.net/';
       return this.tableData.push(tempData);
     }
   }
@@ -136,6 +142,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
       tempData.buy = res.bid * 70;
       tempData.sell = res.ask * 70;
       tempData.name = 'Bit Stamp(XRP)';
+      tempData.redirect = 'https://www.bitstamp.net/';
       return this.tableData.push(tempData);
     }
   }
@@ -146,6 +153,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
       tempData.buy = res.bid * 70;
       tempData.sell = res.ask * 70;
       tempData.name = 'Bit Stamp(ETH)';
+      tempData.redirect = 'https://www.bitstamp.net/';
       return this.tableData.push(tempData);
     }
   }
@@ -156,6 +164,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
       tempData.buy = res.data.price[0].buy_price;
       tempData.sell = res.data.price[0].sell_price;
       tempData.name = 'ThroughBit(BTC)';
+      tempData.redirect = 'https://www.throughbit.com/';
       return this.tableData.push(tempData);
     }
   }
@@ -166,6 +175,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
       tempData.buy = res.data.price[0].buy_price;
       tempData.sell = res.data.price[0].sell_price;
       tempData.name = 'ThroughBit(ETH)';
+      tempData.redirect = 'https://www.throughbit.com/';
       return this.tableData.push(tempData);
     }
   }
@@ -176,6 +186,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
       tempData.buy = res.buyrate;
       tempData.sell = res.sellrate;
       tempData.name = 'FlitPay';
+      tempData.redirect = 'https://www.flitpay.in/';
       return this.tableData.push(tempData);
     }
   }
@@ -187,6 +198,13 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
         tempData.buy = data.price * 67;
         tempData.sell = tempData.buy - (tempData.buy * 0.01);
         tempData.name = data.market;
+        if (data.market === 'Bittrex') {
+          tempData.redirect = 'https://bittrex.com/';
+        }else if (data.market === 'BitFinex') {
+          tempData.redirect = 'https://www.bitfinex.com/';
+        }else if (data.market === 'Exmo') {
+          tempData.redirect = 'https://exmo.com/';
+        }
         return this.tableData.push(tempData);
       }else {
         return;
@@ -203,6 +221,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
       tempData.buy = data[keyBuy];
       tempData.sell = data[keySell];
       tempData.name = 'Buy U Coin';
+      tempData.redirect = 'https://www.buyucoin.com/';
       return this.tableData.push(tempData);
     }
   }
@@ -216,6 +235,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
       tempData.buy = data.lowest_ask;
       tempData.sell = data.highest_bid;
       tempData.name = 'Koinex';
+      tempData.redirect = 'https://koinex.in/';
       return this.tableData.push(tempData);
     }
   }

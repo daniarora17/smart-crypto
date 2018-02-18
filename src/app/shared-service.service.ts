@@ -36,7 +36,11 @@ export class SharedServiceService {
     cryptonator: 'https://api.cryptonator.com/api/full/btc-usd',
     bitStampbtcUsd: '/bitStampBtcUsd/',
     bitStampxrpUsd: '/bitStampXrpUsd/',
-    bitStampethUsd: '/bitStampEthUsd/'
+    bitStampethUsd: '/bitStampEthUsd/',
+    zebPayBtc: 'https://www.zebapi.com/api/v1/market/ticker-new/btc/inr',
+    zebPayLtc: 'https://www.zebapi.com/api/v1/market/ticker-new/ltc/inr',
+    zebPayBch: 'https://www.zebapi.com/api/v1/market/ticker-new/bch/inr',
+    zebPayXrp: 'https://www.zebapi.com/api/v1/market/ticker-new/xrp/inr'
   };
 
   allCoinObservable = Observable.interval(15000)
@@ -70,6 +74,14 @@ export class SharedServiceService {
           .catch((error: any) => Observable.throw(error || 'through bit Server error')),
         this.http.get(this.allCoinUrl.koinex).map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error || 'Koinex Server error'))
+        // this.http.get(this.allCoinUrl.zebPayBtc).map((res: Response) => res.json())
+        //   .catch((error: any) => Observable.throw(error || 'Zebpay Server error')),
+        // this.http.get(this.allCoinUrl.zebPayLtc).map((res: Response) => res.json())
+        //   .catch((error: any) => Observable.throw(error || 'Zebpay Server error')),
+        // this.http.get(this.allCoinUrl.zebPayBch).map((res: Response) => res.json())
+        //   .catch((error: any) => Observable.throw(error || 'Zebpay Server error')),
+        // this.http.get(this.allCoinUrl.zebPayXrp).map((res: Response) => res.json())
+        //   .catch((error: any) => Observable.throw(error || 'Zebpay Server error'))
     )
   );
   constructor(private http: Http) { }

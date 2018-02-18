@@ -3,19 +3,19 @@
 
     <!-- Coin Exchange Column -->
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Coin Exchange </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="table-header"> <strong>Coin Exchange</strong></mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
     </ng-container>
 
     <!-- Buy Column -->
     <ng-container matColumnDef="buy">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Buy Rate(INR)</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="table-header"><strong> Buy Rate(INR) </strong></mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.buy | number:'.3-3'}} </mat-cell>
     </ng-container>
 
-    <!-- Sell Column -->
+    <!-- Sell Column --> 
     <ng-container matColumnDef="sell">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Sell Rate(INR)</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="table-header"><strong> Sell Rate(INR) </strong></mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.sell | number:'.3-3'}} </mat-cell>
     </ng-container>
 
