@@ -23,6 +23,7 @@ import {
 })
 export class LeftNavComponent implements OnInit {
   @Output() coinClicked = new EventEmitter<any>();
+  selectedItem: String;
   state: Object = {
     'btc': 'inactive',
     'xrp': 'inactive',
@@ -79,13 +80,13 @@ export class LeftNavComponent implements OnInit {
   constructor(private _sharedService: SharedServiceService) { }
 
   ngOnInit() {
+    this.selectedItem = 'btc';
   }
 
   getSelectedCoin = (coin) => {
     this.coinClicked.emit(coin);
     this._sharedService.setCoinKey(coin.key);
-    // this.state[coin.key] = this.state[coin.key] === 'inactive' ? 'active' : 'inactive';
-    // this.state[coin.key] = 'active';
+    this.selectedItem = coin.key;
   }
 
   toggleState() {
