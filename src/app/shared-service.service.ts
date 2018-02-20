@@ -17,62 +17,89 @@ import 'rxjs/add/observable/interval';
 @Injectable()
 export class SharedServiceService {
   coinKey: string;
+  baseUrl: String = 'http://localhost:9191/crypto';
+  // allCoinUrl: any = {
+  //   buyUCoin: '/buyUCoin/',
+  //   coinDelta: 'https://coindelta.com/api/v1/public/getticker/',
+  //   zebPay: 'https://live.zebapi.com/api/v1/ticker?currencyCode=inr',
+  //   unoCoin: 'https://www.unocoin.com/trade?all',
+  //   koinex: '/koinex/',
+  //   btcxIndia: 'https://api.btcxindia.com/ticker/',
+  //   bitStampltcUsd: '/bitStampLtcUsd/',
+  //   cryptopiaUsd: 'https://www.cryptopia.co.nz/api/GetCurrencies',
+  //   throughbitbtc: 'https://www.throughbit.com/tbit_ci/index.php/cryptoprice/type/btc/inr',
+  //   throughbiteth: 'https://www.throughbit.com/tbit_ci/index.php/cryptoprice/type/eth/inr',
+  //   flitpaybtc: 'https://intercom.flitlancecdn.com/welcome/bit_rate',
+  //   pocketBits: 'https://pocketbits.in/Index/getBalanceRates',
+  //   bitBns: 'https://bitbns.com/order/getTickerAll',
+  //   cryptocompare: 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,BCH,DASH,LTC,XRP,BTC,OMG,IOTA,QTUM,GNT,NEO,DOGE,ARK,BAT,BCC,BTS,CLOAK,CVC,DGB,PAY&tsyms=INR',
+  //   coinMarketCap: 'https://api.coinmarketcap.com/v1/ticker/?convert=INR&limit=6', // can be limited to any amount
+  //   cryptonator: 'https://api.cryptonator.com/api/full/btc-usd',
+  //   bitStampbtcUsd: '/bitStampBtcUsd/',
+  //   bitStampxrpUsd: '/bitStampXrpUsd/',
+  //   bitStampethUsd: '/bitStampEthUsd/',
+  //   zebPayBtc: 'https://www.zebapi.com/api/v1/market/ticker-new/btc/inr',
+  //   zebPayLtc: 'https://www.zebapi.com/api/v1/market/ticker-new/ltc/inr',
+  //   zebPayBch: 'https://www.zebapi.com/api/v1/market/ticker-new/bch/inr',
+  //   zebPayXrp: 'https://www.zebapi.com/api/v1/market/ticker-new/xrp/inr'
+  // };
+
   allCoinUrl: any = {
     buyUCoin: '/buyUCoin/',
-    coinDelta: 'https://coindelta.com/api/v1/public/getticker/',
-    zebPay: 'https://live.zebapi.com/api/v1/ticker?currencyCode=inr',
-    unoCoin: 'https://www.unocoin.com/trade?all',
+    coinDelta: '/coinDelta/',
+    zebPay: '/zebPay/',
+    unoCoin: '/unoCoin/',
     koinex: '/koinex/',
-    btcxIndia: 'https://api.btcxindia.com/ticker/',
+    btcxIndia: '/btcxIndia/',
     bitStampltcUsd: '/bitStampLtcUsd/',
-    cryptopiaUsd: 'https://www.cryptopia.co.nz/api/GetCurrencies',
-    throughbitbtc: 'https://www.throughbit.com/tbit_ci/index.php/cryptoprice/type/btc/inr',
-    throughbiteth: 'https://www.throughbit.com/tbit_ci/index.php/cryptoprice/type/eth/inr',
-    flitpaybtc: 'https://intercom.flitlancecdn.com/welcome/bit_rate',
-    pocketBits: 'https://pocketbits.in/Index/getBalanceRates',
-    bitBns: 'https://bitbns.com/order/getTickerAll',
-    cryptocompare: 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,BCH,DASH,LTC,XRP,BTC,OMG,IOTA,QTUM,GNT,NEO,DOGE,ARK,BAT,BCC,BTS,CLOAK,CVC,DGB,PAY&tsyms=INR',
-    coinMarketCap: 'https://api.coinmarketcap.com/v1/ticker/?convert=INR&limit=6', // can be limited to any amunr
-    cryptonator: 'https://api.cryptonator.com/api/full/btc-usd',
+    cryptopiaUsd: '/cryptopiaUsd/',
+    throughbitbtc: '/throughbitbtc/',
+    throughbiteth: '/throughbiteth/',
+    flitpaybtc: '/flitpaybtc/',
+    pocketBits: '/pocketBits/',
+    bitBns: '/bitBns/',
+    cryptocompare: '/cryptocompare/',
+    coinMarketCap: '/coinMarketCap/',
+    cryptonator: '/cryptonator/',
     bitStampbtcUsd: '/bitStampBtcUsd/',
     bitStampxrpUsd: '/bitStampXrpUsd/',
     bitStampethUsd: '/bitStampEthUsd/',
-    zebPayBtc: 'https://www.zebapi.com/api/v1/market/ticker-new/btc/inr',
-    zebPayLtc: 'https://www.zebapi.com/api/v1/market/ticker-new/ltc/inr',
-    zebPayBch: 'https://www.zebapi.com/api/v1/market/ticker-new/bch/inr',
-    zebPayXrp: 'https://www.zebapi.com/api/v1/market/ticker-new/xrp/inr'
+    zebPayBtc: '/zebPayBtc/',
+    zebPayLtc: '/zebPayLtc/',
+    zebPayBch: '/zebPayBch/',
+    zebPayXrp: '/zebPayXrp/'
   };
 
   allCoinObservable = Observable.interval(15000)
     .switchMap(() =>
       Observable.forkJoin(
-        this.http.get(this.allCoinUrl.coinDelta).map((res: Response) => res.json())
+        this.http.get( this.baseUrl + this.allCoinUrl.coinDelta).map((res: Response) => res.json())
           .catch((error: any) => 'CoinDelta Server error'),
-        this.http.get(this.allCoinUrl.zebPay).map((res: Response) => res.json())
+        this.http.get(this.baseUrl + this.allCoinUrl.zebPay).map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error || 'ZebPay Server error')),
-        this.http.get(this.allCoinUrl.bitStampltcUsd).map((res: Response) => res.json())
+        this.http.get(this.baseUrl + this.allCoinUrl.bitStampltcUsd).map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error || 'BItStamp Server error')),
-        this.http.get(this.allCoinUrl.bitStampbtcUsd).map((res: Response) => res.json())
+        this.http.get(this.baseUrl + this.allCoinUrl.bitStampbtcUsd).map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error || 'BItStamp Server error')),
-        this.http.get(this.allCoinUrl.bitStampxrpUsd).map((res: Response) => res.json())
+        this.http.get(this.baseUrl + this.allCoinUrl.bitStampxrpUsd).map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error || 'BItStamp Server error')),
-        this.http.get(this.allCoinUrl.bitStampethUsd).map((res: Response) => res.json())
+        this.http.get(this.baseUrl + this.allCoinUrl.bitStampethUsd).map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error || 'BItStamp Server error')),
-        this.http.get(this.allCoinUrl.throughbitbtc).map((res: Response) => res.json())
+        this.http.get(this.baseUrl + this.allCoinUrl.throughbitbtc).map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error || 'through bit Server error')),
-        this.http.get(this.allCoinUrl.throughbiteth).map((res: Response) => res.json())
+        this.http.get(this.baseUrl + this.allCoinUrl.throughbiteth).map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error || 'through bit Server error')),
-        this.http.get(this.allCoinUrl.flitpaybtc).map((res: Response) => res.json())
+        this.http.get(this.baseUrl + this.allCoinUrl.flitpaybtc).map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error || 'through bit Server error')),
-        this.http.get(this.allCoinUrl.cryptocompare).map((res: Response) => res.json())
+        this.http.get(this.baseUrl + this.allCoinUrl.cryptocompare).map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error || 'through bit Server error')),
-        this.http.get(this.allCoinUrl.coinMarketCap).map((res: Response) => res.json())
+        this.http.get(this.baseUrl + this.allCoinUrl.coinMarketCap).map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error || 'through bit Server error')),
-        this.http.get(this.allCoinUrl.cryptonator).map((res: Response) => res.json())
+        this.http.get(this.baseUrl + this.allCoinUrl.cryptonator).map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error || 'through bit Server error')),
-        this.http.get(this.allCoinUrl.buyUCoin).map((res: Response) => res.json())
+        this.http.get(this.baseUrl + this.allCoinUrl.buyUCoin).map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error || 'through bit Server error')),
-        this.http.get(this.allCoinUrl.koinex).map((res: Response) => res.json())
+        this.http.get(this.baseUrl + this.allCoinUrl.koinex).map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error || 'Koinex Server error'))
         // this.http.get(this.allCoinUrl.zebPayBtc).map((res: Response) => res.json())
         //   .catch((error: any) => Observable.throw(error || 'Zebpay Server error')),
