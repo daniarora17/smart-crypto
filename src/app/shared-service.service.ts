@@ -22,14 +22,14 @@ export class SharedServiceService {
   //   buyUCoin: '/buyUCoin/',
   //   coinDelta: 'https://coindelta.com/api/v1/public/getticker/',
   //   zebPay: 'https://live.zebapi.com/api/v1/ticker?currencyCode=inr',
-  //   unoCoin: 'https://www.unocoin.com/trade?all',
+  //   unoCoin: 'https://www.unocoin.com/trade?all', // text/html problem
   //   koinex: '/koinex/',
-  //   btcxIndia: 'https://api.btcxindia.com/ticker/',
+  //   ??btcxIndia: 'https://api.btcxindia.com/ticker/',
   //   bitStampltcUsd: '/bitStampLtcUsd/',
-  //   cryptopiaUsd: 'https://www.cryptopia.co.nz/api/GetCurrencies',
-  //   throughbitbtc: 'https://www.throughbit.com/tbit_ci/index.php/cryptoprice/type/btc/inr',
-  //   throughbiteth: 'https://www.throughbit.com/tbit_ci/index.php/cryptoprice/type/eth/inr',
-  //   flitpaybtc: 'https://intercom.flitlancecdn.com/welcome/bit_rate',
+  //   ??cryptopiaUsd: 'https://www.cryptopia.co.nz/api/GetCurrencies',
+  //   throughbitbtc: 'https://www.throughbit.com/tbit_ci/index.php/cryptoprice/type/btc/inr',// text/html problem
+  //   throughbiteth: 'https://www.throughbit.com/tbit_ci/index.php/cryptoprice/type/eth/inr',// text/html problem
+  //   flitpaybtc: 'https://intercom.flitlancecdn.com/welcome/bit_rate', // text/html problem
   //   pocketBits: 'https://pocketbits.in/Index/getBalanceRates',
   //   bitBns: 'https://bitbns.com/order/getTickerAll',
   //   cryptocompare: 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,BCH,DASH,LTC,XRP,BTC,OMG,IOTA,QTUM,GNT,NEO,DOGE,ARK,BAT,BCC,BTS,CLOAK,CVC,DGB,PAY&tsyms=INR',
@@ -51,7 +51,7 @@ export class SharedServiceService {
     unoCoin: '/unoCoin/',
     koinex: '/koinex/',
     btcxIndia: '/btcxIndia/',
-    bitStampltcUsd: '/bitStampLtcUsd/',
+    bitStampLtcUsd: '/bitStampLtcUsd/',
     cryptopiaUsd: '/cryptopiaUsd/',
     throughbitbtc: '/throughbitbtc/',
     throughbiteth: '/throughbiteth/',
@@ -61,9 +61,9 @@ export class SharedServiceService {
     cryptocompare: '/cryptocompare/',
     coinMarketCap: '/coinMarketCap/',
     cryptonator: '/cryptonator/',
-    bitStampbtcUsd: '/bitStampBtcUsd/',
-    bitStampxrpUsd: '/bitStampXrpUsd/',
-    bitStampethUsd: '/bitStampEthUsd/',
+    bitStampBtcUsd: '/bitStampBtcUsd/',
+    bitStampXrpUsd: '/bitStampXrpUsd/',
+    bitStampEthUsd: '/bitStampEthUsd/',
     zebPayBtc: '/zebPayBtc/',
     zebPayLtc: '/zebPayLtc/',
     zebPayBch: '/zebPayBch/',
@@ -77,13 +77,13 @@ export class SharedServiceService {
           .catch((error: any) => 'CoinDelta Server error'),
         this.http.get(this.baseUrl + this.allCoinUrl.zebPay).map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error || 'ZebPay Server error')),
-        this.http.get(this.baseUrl + this.allCoinUrl.bitStampltcUsd).map((res: Response) => res.json())
+        this.http.get(this.baseUrl + this.allCoinUrl.bitStampLtcUsd).map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error || 'BItStamp Server error')),
-        this.http.get(this.baseUrl + this.allCoinUrl.bitStampbtcUsd).map((res: Response) => res.json())
+        this.http.get(this.baseUrl + this.allCoinUrl.bitStampBtcUsd).map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error || 'BItStamp Server error')),
-        this.http.get(this.baseUrl + this.allCoinUrl.bitStampxrpUsd).map((res: Response) => res.json())
+        this.http.get(this.baseUrl + this.allCoinUrl.bitStampXrpUsd).map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error || 'BItStamp Server error')),
-        this.http.get(this.baseUrl + this.allCoinUrl.bitStampethUsd).map((res: Response) => res.json())
+        this.http.get(this.baseUrl + this.allCoinUrl.bitStampEthUsd).map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error || 'BItStamp Server error')),
         this.http.get(this.baseUrl + this.allCoinUrl.throughbitbtc).map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error || 'through bit Server error')),
