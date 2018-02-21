@@ -100,15 +100,15 @@ export class SharedServiceService {
         this.http.get(this.baseUrl + this.allCoinUrl.buyUCoin).map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error || 'through bit Server error')),
         this.http.get(this.baseUrl + this.allCoinUrl.koinex).map((res: Response) => res.json())
-          .catch((error: any) => Observable.throw(error || 'Koinex Server error'))
-        // this.http.get(this.allCoinUrl.zebPayBtc).map((res: Response) => res.json())
-        //   .catch((error: any) => Observable.throw(error || 'Zebpay Server error')),
-        // this.http.get(this.allCoinUrl.zebPayLtc).map((res: Response) => res.json())
-        //   .catch((error: any) => Observable.throw(error || 'Zebpay Server error')),
-        // this.http.get(this.allCoinUrl.zebPayBch).map((res: Response) => res.json())
-        //   .catch((error: any) => Observable.throw(error || 'Zebpay Server error')),
-        // this.http.get(this.allCoinUrl.zebPayXrp).map((res: Response) => res.json())
-        //   .catch((error: any) => Observable.throw(error || 'Zebpay Server error'))
+          .catch((error: any) => Observable.throw(error || 'Koinex Server error')),
+        this.http.get(this.baseUrl + this.allCoinUrl.zebPayBtc).map((res: Response) => res.json())
+          .catch((error: any) => Observable.throw(error || 'Zebpay Server error')),
+        this.http.get(this.baseUrl + this.allCoinUrl.zebPayLtc).map((res: Response) => res.json())
+          .catch((error: any) => Observable.throw(error || 'Zebpay Server error')),
+        this.http.get(this.baseUrl + this.allCoinUrl.zebPayBch).map((res: Response) => res.json())
+          .catch((error: any) => Observable.throw(error || 'Zebpay Server error')),
+        this.http.get(this.baseUrl + this.allCoinUrl.zebPayXrp).map((res: Response) => res.json())
+          .catch((error: any) => Observable.throw(error || 'Zebpay Server error'))
     )
   );
   constructor(private http: Http) { }

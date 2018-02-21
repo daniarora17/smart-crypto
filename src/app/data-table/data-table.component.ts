@@ -69,7 +69,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
   private transformCoinDeltaResponse(key, res) {
     const keyINR = `${key}-inr`;
     const tempData: any = {};
-    res.filter((data) => {
+    res.data.filter((data) => {
       if (data.MarketName.includes(keyINR)) {
         tempData.buy = data.Bid;
         tempData.sell = data.Ask;
@@ -82,7 +82,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   private transformCryptoCompare(key, res) {
     const tempData: any = {};
-    tempData.buy = res[key.toUpperCase()].INR;
+    tempData.buy = res.data[key.toUpperCase()].INR;
     tempData.sell = tempData.buy - (tempData.buy * 0.01);
     tempData.name = 'Crypto Compare';
     tempData.redirect = 'https://www.cryptocompare.com/';
@@ -91,7 +91,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   private transformCoinMarketCap(key, res) {
     const tempData: any = {};
-    res.filter((data) => {
+    res.data.filter((data) => {
       if (data.symbol.toLowerCase() === key) {
         tempData.buy = data.price_inr;
         tempData.sell = tempData.buy - (tempData.buy * 0.01);
@@ -105,9 +105,9 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
   private transformZebpayResponse(res) {
     const tempData: any = {};
     console.log(this.tableData, 'table data>>>>');
-    if (res) {
-      tempData.buy = res.buy;
-      tempData.sell = res.sell;
+    if (res.data) {
+      tempData.buy = res.data.buy;
+      tempData.sell = res.data.sell;
       tempData.name = 'ZebPay';
       tempData.redirect = 'https://www.zebpay.com/';
       return this.tableData.push(tempData);
@@ -116,9 +116,9 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   private transformBitStampLtc(res) {
     const tempData: any = {};
-    if (res) {
-      tempData.buy = res.bid * 70;
-      tempData.sell = res.ask * 70;
+    if (res.data) {
+      tempData.buy = res.data.bid * 70;
+      tempData.sell = res.data.ask * 70;
       tempData.name = 'Bit Stamp(LTC)';
       tempData.redirect = 'https://www.bitstamp.net/';
       return this.tableData.push(tempData);
@@ -127,9 +127,9 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   private transformBitStampBtc(res) {
     const tempData: any = {};
-    if (res) {
-      tempData.buy = res.bid * 70;
-      tempData.sell = res.ask * 70;
+    if (res.data) {
+      tempData.buy = res.data.bid * 70;
+      tempData.sell = res.data.ask * 70;
       tempData.name = 'Bit Stamp(BTC)';
       tempData.redirect = 'https://www.bitstamp.net/';
       return this.tableData.push(tempData);
@@ -138,9 +138,9 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   private transformBitStampXrp(res) {
     const tempData: any = {};
-    if (res) {
-      tempData.buy = res.bid * 70;
-      tempData.sell = res.ask * 70;
+    if (res.data) {
+      tempData.buy = res.data.bid * 70;
+      tempData.sell = res.data.ask * 70;
       tempData.name = 'Bit Stamp(XRP)';
       tempData.redirect = 'https://www.bitstamp.net/';
       return this.tableData.push(tempData);
@@ -149,9 +149,9 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   private transformBitStampEth(res) {
     const tempData: any = {};
-    if (res) {
-      tempData.buy = res.bid * 70;
-      tempData.sell = res.ask * 70;
+    if (res.data) {
+      tempData.buy = res.data.bid * 70;
+      tempData.sell = res.data.ask * 70;
       tempData.name = 'Bit Stamp(ETH)';
       tempData.redirect = 'https://www.bitstamp.net/';
       return this.tableData.push(tempData);
@@ -160,9 +160,9 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   private transformThroughbitBtc(res) {
     const tempData: any = {};
-    if (res) {
-      tempData.buy = res.data.price[0].buy_price;
-      tempData.sell = res.data.price[0].sell_price;
+    if (res.data) {
+      tempData.buy = res.data.data.price[0].buy_price;
+      tempData.sell = res.data.data.price[0].sell_price;
       tempData.name = 'ThroughBit(BTC)';
       tempData.redirect = 'https://www.throughbit.com/';
       return this.tableData.push(tempData);
@@ -171,9 +171,9 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   private transformThroughbitEth(res) {
     const tempData: any = {};
-    if (res) {
-      tempData.buy = res.data.price[0].buy_price;
-      tempData.sell = res.data.price[0].sell_price;
+    if (res.data) {
+      tempData.buy = res.data.data.price[0].buy_price;
+      tempData.sell = res.data.data.price[0].sell_price;
       tempData.name = 'ThroughBit(ETH)';
       tempData.redirect = 'https://www.throughbit.com/';
       return this.tableData.push(tempData);
@@ -182,9 +182,9 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   private transformFlitpayBtc(res) {
     const tempData: any = {};
-    if (res) {
-      tempData.buy = res.buyrate;
-      tempData.sell = res.sellrate;
+    if (res.data) {
+      tempData.buy = res.data.buyrate;
+      tempData.sell = res.data.sellrate;
       tempData.name = 'FlitPay';
       tempData.redirect = 'https://www.flitpay.in/';
       return this.tableData.push(tempData);
@@ -192,7 +192,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   private transformCryptonatorBtc(res) {
-    res.ticker.markets.filter((data) => {
+    res.data.ticker.markets.filter((data) => {
       const tempData: any = {};
       if (data.market === 'Bittrex' || data.market === 'BitFinex' || data.market === 'Livecoin' || data.market === 'Exmo') {
         tempData.buy = data.price * 67;
@@ -215,7 +215,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
   private transformBuyCoinData(key, res) {
     const keyBuy = `${key}_buy_price`;
     const keySell = `${key}_sell_price`;
-    const data = res.BuyUcoin_data[0];
+    const data = res.data.BuyUcoin_data[0];
     const tempData: any = {};
     if (data[keyBuy]) {
       tempData.buy = data[keyBuy];
@@ -228,7 +228,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   private transformKoinexData(key, res) {
     const keyUpper = key.toUpperCase();
-    const data = res.stats[keyUpper];
+    const data = res.data.stats[keyUpper];
     console.log(data, 'data>>>>>>>');
     const tempData: any = {};
     if (data) {
