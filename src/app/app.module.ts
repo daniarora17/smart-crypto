@@ -11,6 +11,8 @@ import { HeaderComponent } from './header/header.component';
 import { DataTableComponent } from './data-table/data-table.component';
 import { SharedServiceService } from './shared-service.service';
 import { BestPriceComponent } from './best-price/best-price.component';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+import { FooterComponent } from './footer/footer.component';
 
 
 
@@ -20,7 +22,8 @@ import { BestPriceComponent } from './best-price/best-price.component';
     LeftNavComponent,
     HeaderComponent,
     DataTableComponent,
-    BestPriceComponent
+    BestPriceComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,8 @@ import { BestPriceComponent } from './best-price/best-price.component';
     MatTableModule,
     MatSortModule,
     MatProgressSpinnerModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    Ng4LoadingSpinnerModule.forRoot()
   ],
   providers: [SharedServiceService],
   bootstrap: [AppComponent]

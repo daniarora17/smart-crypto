@@ -7,9 +7,9 @@ import { Component, Input, OnChanges } from '@angular/core';
 })
 export class BestPriceComponent implements OnChanges {
   @Input() data: any[];
-  tableData: any[];
-  bestBuy: any[];
-  bestSell: any[];
+  tableData: any = [];
+  bestBuy: any;
+  bestSell: any;
 
   constructor() { }
 

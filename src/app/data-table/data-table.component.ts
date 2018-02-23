@@ -3,6 +3,7 @@ import { SharedServiceService } from '../shared-service.service';
 import { Table } from '../Table';
 import { DecimalPipe } from '@angular/common';
 import { MatTableDataSource, MatSort } from '@angular/material';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-data-table',
@@ -10,6 +11,7 @@ import { MatTableDataSource, MatSort } from '@angular/material';
   styleUrls: ['./data-table.component.less']
 })
 export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
+  spinnerColor: String = '#eee';
   showSpinner: Boolean = true;
   @Input() selectedCoin: any;
   coinKey: string;
@@ -20,7 +22,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private _sharedService: SharedServiceService) { }
+  constructor(private _sharedService: SharedServiceService, private spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
     // this.dataSource.data = ELEMENT_DATA;
@@ -32,6 +34,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnChanges(changes: any) {
+    this.spinnerService.show();
     this.showSpinner = true;
     // console.log(changes, 'changes>>>>>.');
     this.coinKey = changes.selectedCoin.currentValue;
@@ -62,6 +65,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
         this.transformThroughbitEth(this.responseData[7]);
       }
       this.showSpinner = false;
+      this.spinnerService.hide();
       return this.dataSource.data = this.tableData;
     });
   }

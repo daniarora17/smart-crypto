@@ -3,4 +3,7 @@
   <app-header></app-header>
   <app-left-nav (coinClicked)='coinClicked($event)' class="left-nav"></app-left-nav>
   <app-data-table [selectedCoin]="selectedCoinKey" class="data-table"></app-data-table>
+  <app-footer></app-footer>
 </div>
+
+<ng4-loading-spinner [threshold]="2000"> </ng4-loading-spinner>

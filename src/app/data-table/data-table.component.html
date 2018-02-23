@@ -23,8 +23,8 @@
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
 </div>
-<mat-spinner *ngIf="showSpinner" class="example-margin" [color]="accent" [value]="80" [strokeWidth]="5">
-</mat-spinner>
+<!-- <mat-spinner *ngIf="showSpinner" class="example-margin" [color]="warn" [value]="80" [strokeWidth]="5">
+</mat-spinner> -->
 <app-best-price *ngIf="!showSpinner" [data]="tableData"></app-best-price>
 
 
