@@ -5,6 +5,7 @@ import { DecimalPipe } from '@angular/common';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
+
 @Component({
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
@@ -123,8 +124,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
   private transformBitStamp(res) {
     const tempData: any = {};
     if (res.data !== null) {
-      fx.settings = { from: 'USD', to: 'INR' };
-      tempData.buy = fx.convert(res.data.bid);
+      tempData.buy = res.data.bid * 70;
       tempData.sell = res.data.ask * 70;
       tempData.name = 'Bit Stamp';
       tempData.redirect = 'https://www.bitstamp.net/';
