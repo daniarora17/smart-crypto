@@ -1,5 +1,5 @@
-<div *ngIf="!showSpinner" class="example-container mat-elevation-z8">
-  <mat-table #table [dataSource]="dataSource" matSort>
+<div class="example-container mat-elevation-z8">
+  <mat-table [dataSource]="dataSource" matSort>
 
     <!-- Coin Exchange Column -->
     <ng-container matColumnDef="name">
@@ -19,7 +19,7 @@
       <mat-cell *matCellDef="let element"> {{element.sell | number:'.3-3'}} </mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-header-row  *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
 </div>

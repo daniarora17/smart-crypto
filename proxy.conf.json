@@ -46,6 +46,38 @@
             "^/koinex": ""
         },
         "changeOrigin": true
+    },
+    "/zebPayBtc": {
+        "target": "https://www.zebapi.com/api/v1/market/ticker-new/btc/inr",
+        "secure": false,
+        "pathRewrite": {
+            "^/zebPayBtc": ""
+        },
+        "changeOrigin": true
+    },
+    "/zebPayLtc": {
+        "target": "https://www.zebapi.com/api/v1/market/ticker-new/ltc/inr",
+        "secure": false,
+        "pathRewrite": {
+            "^/zebPayLtc": ""
+        },
+        "changeOrigin": true
+    },
+    "/zebPayBch": {
+        "target": "https://www.zebapi.com/api/v1/market/ticker-new/bch/inr",
+        "secure": false,
+        "pathRewrite": {
+            "^/zebPayBch": ""
+        },
+        "changeOrigin": true
+    },
+    "/zebPayXrp": {
+        "target": "https://www.zebapi.com/api/v1/market/ticker-new/xrp/inr",
+        "secure": false,
+        "pathRewrite": {
+            "^/zebPayXrp": ""
+        },
+        "changeOrigin": true
     }
     
 }

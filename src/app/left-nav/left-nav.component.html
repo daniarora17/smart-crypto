@@ -1,6 +1,6 @@
 <div class="left-nav-main">
   <!-- <span class="left-nav-title">Select Coin, You wish to compare!!</span> -->
-  <ul class="left-nav-coin-list">
+  <ul class="left-nav-coin-list wrap">
     <li class="left-nav-coin-item" *ngFor="let coin of coinList" [ngClass]="{'active': selectedItem === coin.key }">
       <a (click)="getSelectedCoin(coin)">
         <img [src]="coin.url">
