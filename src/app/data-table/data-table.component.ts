@@ -198,5 +198,3 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
 }
-
-

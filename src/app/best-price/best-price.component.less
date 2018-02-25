@@ -1,9 +1,15 @@
     
 .best-price-container {
     margin-top: 10px;
-    display: inline-flex;
-    width: 90%;
+    display: flex;
+    width: 94%;
     margin-left: 30px;
+    flex-wrap: wrap;
+    .best-buy {
+        width: 50%;
+        flex: 1;
+        min-width: 400px;
+    }
     .best-buy-text {
         border: 1px solid #79c6d1;
         border-radius: 25px;
@@ -24,22 +30,18 @@
     .best-buy-data {
         border: 1px solid #79c6d1;
         border-radius: 10px;
-        width: 500px;
         height: 60px;
         margin-right: 25px;
         margin-bottom: 20px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
         .best-buy-link {
-                text-decoration: none;
-                color: #79c6d1;
-                text-shadow: 1px 1px grey;
-                font-size: 17px;
-                font-family: monospace;
-        }
-        .best-buy-name {
-            display: inline-flex;
-            padding: 25px;
-            margin-right: 17%;
-            margin-left: 5%;
+            text-decoration: none;
+            color: #79c6d1;
+            text-shadow: 1px 1px grey;
+            font-size: 17px;
+            font-family: monospace;
         }
     }
 }
