@@ -1,11 +1,11 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-best-price',
   templateUrl: './best-price.component.html',
   styleUrls: ['./best-price.component.less']
 })
-export class BestPriceComponent implements OnChanges {
+export class BestPriceComponent implements OnChanges, OnInit {
   @Input() data: any[];
   tableData: any = [];
   bestBuy: any;
@@ -13,24 +13,30 @@ export class BestPriceComponent implements OnChanges {
 
   constructor() { }
 
+  ngOnInit() {
+    this.getbestPrice(this.data);
+  }
+
   ngOnChanges(changes) {
-    this.tableData = changes.data.currentValue;
-    this.getbestPrice(this.tableData);
+    if (changes.data.previousValue) {
+      this.tableData = changes.data.currentValue;
+      this.getbestPrice(this.tableData);
+    }
   }
 
   private getbestPrice(res) {
-    let lowest = Number.POSITIVE_INFINITY;
-    let highest = Number.NEGATIVE_INFINITY;
-    res.map((data) => {
-      if (data.buy < lowest) {
-        lowest = data.buy;
+    const bestBuy: Number = Math.min.apply(Math, res.map(function (o) { return o.buy; }));
+    const bestSell: Number = Math.max.apply(Math, res.map(function (o) { return o.sell; }));
+    res.filter((data) => {
+      if (parseFloat(data.buy) === bestBuy) {
         return this.bestBuy = data;
       }
-      if (data.sell > highest) {
-        highest = data.sell;
+    });
+    res.filter((data) => {
+      if (parseFloat(data.sell) === bestSell) {
         return this.bestSell = data;
       }
     });
   }
-
 }
+

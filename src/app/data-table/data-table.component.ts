@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, AfterViewInit, ViewChild, IterableDiffers, DoCheck } from '@angular/core';
 import { SharedServiceService } from '../shared-service.service';
 import { Table } from '../Table';
 import { DecimalPipe } from '@angular/common';
@@ -11,20 +11,27 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.less']
 })
-export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
-  showSpinner: Boolean = true;
+export class DataTableComponent implements OnInit, OnChanges, AfterViewInit, DoCheck {
   @Input() selectedCoin: any;
+  sendBestPriceData: Boolean = true;
   coinKey: string;
   displayedColumns = ['name', 'buy', 'sell'];
   responseData: any[];
-  tableData: any = [];
+  tableData: any[] = [];
   dataSource = new MatTableDataSource();
+  differ: any;
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private _sharedService: SharedServiceService, private spinnerService: Ng4LoadingSpinnerService) { }
+  constructor(private _sharedService: SharedServiceService, private spinnerService: Ng4LoadingSpinnerService, differs: IterableDiffers) { 
+    this.differ = differs.find([]).create(null);
+   }
 
   ngOnInit() {
+
+  }
+
+  ngDoCheck() {
 
   }
 
@@ -34,7 +41,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngOnChanges(changes: any) {
     this.spinnerService.show();
-    this.showSpinner = true;
+    this.sendBestPriceData = true;
     this.coinKey = changes.selectedCoin.currentValue;
     this._sharedService.allCoinObservable
     .subscribe(result => {
@@ -62,8 +69,8 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
       } else if (this.coinKey === 'bch') {
         this.transformZebpayResponse(this.responseData[14]);
       }
-      this.showSpinner = false;
       this.spinnerService.hide();
+      this.sendBestPriceData = false;
       return this.dataSource.data = this.tableData;
     });
   }
@@ -168,6 +175,9 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   private transformBuyCoinData(key, res) {
     if (res.data !== null) {
+      if (key === 'bch') {
+        key = 'bcc';
+      }
       const keyBuy = `${key}_buy_price`;
       const keySell = `${key}_sell_price`;
       const data = res.data.body.BuyUcoin_data[0];
@@ -186,7 +196,6 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
     if (res.data !== null) {
       const keyUpper = key.toUpperCase();
       const data = res.data.stats[keyUpper];
-      console.log(data, 'data>>>>>>>');
       const tempData: any = {};
       if (data !== null) {
         tempData.buy = data.lowest_ask;

@@ -49,6 +49,11 @@ export class LeftNavComponent implements OnInit {
       'key': 'gnt',
       'name': 'Golem',
       'url': './assets/golem.png'
+    },
+    {
+      'key': 'dgb',
+      'name': 'DigiByte',
+      'url': './assets/digibyte.png'
     }
   ];
 
