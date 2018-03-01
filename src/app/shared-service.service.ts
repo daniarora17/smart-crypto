@@ -31,7 +31,7 @@ import 'rxjs/add/observable/merge';
 
 
 
-const serverUrl = 'http://13.127.192.245:9292/crypto';
+const serverUrl = 'http://13.127.192.245:9191/crypto';
 
 @Injectable()
 export class SharedServiceService {
