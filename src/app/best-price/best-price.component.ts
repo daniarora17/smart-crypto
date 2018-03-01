@@ -39,4 +39,3 @@ export class BestPriceComponent implements OnChanges, OnInit {
     });
   }
 }
-

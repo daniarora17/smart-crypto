@@ -19,11 +19,19 @@ import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/observable/race';
 import 'rxjs/add/observable/combineLatest';
 // import { timer } from 'rxjs/observable/timer';
-import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/timer';
+import 'rxjs/add/observable/timer';
+import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/observable/concat';
+import 'rxjs/add/observable/zip';
+import 'rxjs/add/observable/merge';
 
 
-const serverUrl = 'http://13.127.192.245:9191/crypto';
+
+
+
+
+const serverUrl = 'http://13.127.192.245:9292/crypto';
 
 @Injectable()
 export class SharedServiceService {
@@ -73,11 +81,12 @@ export class SharedServiceService {
     zebPayBtc: '/zebPayBtc/',
     zebPayLtc: '/zebPayLtc/',
     zebPayBch: '/zebPayBch/',
-    zebPayXrp: '/zebPayXrp/'
+    zebPayXrp: '/zebPayXrp/',
+    coinOme: '/coinOme/'
   };
 
-  allCoinObservable = Observable.timer(0, 20000)
-    .switchMap(() =>
+  allCoinObservable = Observable.timer(0, 30000)
+    .mergeMap(() =>
       Observable.forkJoin(
         this.http.get( serverUrl + this.allCoinUrl.coinDelta).map((res: Response) => res.json())
           .catch((error: any) => 'CoinDelta Server error'),
@@ -110,7 +119,13 @@ export class SharedServiceService {
         this.http.get(serverUrl + this.allCoinUrl.zebPayBch).map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error || 'Zebpay Server error')),
         this.http.get(serverUrl + this.allCoinUrl.zebPayXrp).map((res: Response) => res.json())
-          .catch((error: any) => Observable.throw(error || 'Zebpay Server error'))
+          .catch((error: any) => Observable.throw(error || 'Zebpay Server error')),
+        this.http.get(serverUrl + this.allCoinUrl.pocketBits).map((res: Response) => res.json())
+          .catch((error: any) => Observable.throw(error || 'Pocket bits Server error')),
+        this.http.get(serverUrl + this.allCoinUrl.bitBns).map((res: Response) => res.json())
+          .catch((error: any) => Observable.throw(error || 'BitBns Server error')),
+        this.http.get(serverUrl + this.allCoinUrl.coinOme).map((res: Response) => res.json())
+          .catch((error: any) => Observable.throw(error || 'CoinOme Server error'))
       )
     );
 
@@ -118,20 +133,6 @@ export class SharedServiceService {
   constructor(private http: Http) { }
 
   setCoinKey = (key: string) => {
-    console.log(this.allCoinUrl, 'alll coin urllll>>');
-    console.log(key, 'came selecetedd >>>');
     return this.coinKey = key;
   }
-
-  getbuyUCoinPrice = () => {
-    const buycoinUrl = this.allCoinUrl.buyucoin;
-    // const headers: any = new Headers().append('Access-Control-Allow-Origin', '*');
-    console.log(buycoinUrl, 'urll>>>');
-    // console.log(headers, 'req heaess>>');
-    return this.http.get(buycoinUrl)
-    .map((res: Response) => res.json())
-    .catch((error: any) => Observable.throw( error || 'BuyUCoin Server error'));
-  }
-
-
 }

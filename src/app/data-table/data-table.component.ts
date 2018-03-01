@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, AfterViewInit, ViewChild, IterableDiffers, DoCheck } from '@angular/core';
+import { Component, Input, OnChanges, AfterViewInit, ViewChild } from '@angular/core';
 import { SharedServiceService } from '../shared-service.service';
 import { Table } from '../Table';
 import { DecimalPipe } from '@angular/common';
@@ -11,7 +11,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.less']
 })
-export class DataTableComponent implements OnInit, OnChanges, AfterViewInit, DoCheck {
+export class DataTableComponent implements OnChanges, AfterViewInit {
   @Input() selectedCoin: any;
   sendBestPriceData: Boolean = true;
   coinKey: string;
@@ -19,21 +19,10 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit, DoC
   responseData: any[];
   tableData: any[] = [];
   dataSource = new MatTableDataSource();
-  differ: any;
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private _sharedService: SharedServiceService, private spinnerService: Ng4LoadingSpinnerService, differs: IterableDiffers) { 
-    this.differ = differs.find([]).create(null);
-   }
-
-  ngOnInit() {
-
-  }
-
-  ngDoCheck() {
-
-  }
+  constructor(private _sharedService: SharedServiceService, private spinnerService: Ng4LoadingSpinnerService) {}
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
@@ -48,10 +37,13 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit, DoC
       this.responseData = result;
       this.tableData = [];
       this.transformKoinexData(this.coinKey, this.responseData[12]);
+      this.transformCoinOme(this.coinKey, this.responseData[18]);
       this.transformCoinDeltaResponse(this.coinKey, this.responseData[0]);
       this.transformCryptoCompare(this.coinKey, this.responseData[8]);
       this.transformCoinMarketCap(this.coinKey, this.responseData[9]);
       this.transformBuyCoinData(this.coinKey, this.responseData[11]);
+      this.transformPocketBits(this.coinKey, this.responseData[16]);
+      this.transformBitBns(this.coinKey, this.responseData[17]);
       if (this.coinKey === 'btc') {
         this.transformZebpayResponse(this.responseData[1]);
         this.transformBitStamp(this.responseData[3]);
@@ -73,6 +65,53 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit, DoC
       this.sendBestPriceData = false;
       return this.dataSource.data = this.tableData;
     });
+  }
+
+  private transformCoinOme(key, res) {
+    const keySpec = `${key}-inr`;
+    const tempData: any = {};
+    if (res.data !== null && res.data[keySpec]) {
+      tempData.buy = res.data[keySpec].lowest_ask;
+      tempData.sell = res.data[keySpec].highest_bid;
+      tempData.name = 'CoinOme';
+      tempData.redirect = 'https://www.coinome.com/';
+      return this.tableData.push(tempData);
+    }
+  }
+
+  private transformBitBns(key, res) {
+    if (res.data !== null) {
+      const upperKey = key.toUpperCase();
+      const resData = res.data.body;
+      const tempData: any = {};
+      resData.map((data) => {
+        if (data[upperKey]) {
+          tempData.buy = data[upperKey].buyPrice;
+          tempData.sell = data[upperKey].sellPrice;
+          tempData.name = 'BitBns';
+          tempData.redirect = 'https://bitbns.com/';
+          return this.tableData.push(tempData);
+        }
+      });
+    }
+  }
+
+  private transformPocketBits(key, res) {
+    if (key === 'btc') {
+      key = 'BTC';
+    } else if (key === 'eth') {
+      key = 'Eth';
+    }
+    const buyRate = `${key}_SellingRate`;
+    const sellRate = `${key}_BuyingRate`;
+    const tempData: any = {};
+    if (res.data !== null && res.responseCode === 200 && res.data.body.rates[buyRate] && res.data.body.rates[sellRate]) {
+      tempData.buy = res.data.body.rates[buyRate];
+      tempData.sell = res.data.body.rates[sellRate];
+      tempData.name = 'PocketBits';
+      tempData.redirect = 'https://pocketbits.in/';
+      return this.tableData.push(tempData);
+    }
   }
 
   private transformCoinDeltaResponse(key, res) {
@@ -197,7 +236,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit, DoC
       const keyUpper = key.toUpperCase();
       const data = res.data.stats[keyUpper];
       const tempData: any = {};
-      if (data !== null) {
+      if (data !== null && data) {
         tempData.buy = data.lowest_ask;
         tempData.sell = data.highest_bid;
         tempData.name = 'Koinex';
