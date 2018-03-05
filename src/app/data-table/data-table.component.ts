@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnInit , AfterViewInit, ViewChild , DoCheck, KeyValueDiffers, KeyValueChangeRecord, KeyValueChanges, IterableDiffers, KeyValueDiffer} from '@angular/core';
 import { SharedServiceService } from '../shared-service.service';
 import { Table } from '../Table';
 import { DecimalPipe } from '@angular/common';
@@ -11,7 +11,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.less']
 })
-export class DataTableComponent implements OnChanges, AfterViewInit {
+export class DataTableComponent implements OnChanges, AfterViewInit, OnInit, DoCheck {
   @Input() selectedCoin: any;
   sendBestPriceData: Boolean = true;
   coinKey: string;
@@ -19,13 +19,43 @@ export class DataTableComponent implements OnChanges, AfterViewInit {
   responseData: any[];
   tableData: any[] = [];
   dataSource = new MatTableDataSource();
+  differ: any;
+  diffObject: any = {};
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private _sharedService: SharedServiceService, private spinnerService: Ng4LoadingSpinnerService) {}
+  constructor(private _sharedService: SharedServiceService, private spinnerService: Ng4LoadingSpinnerService, private _differs: KeyValueDiffers ) {
+    this.differ = _differs.find({}).create();
+  }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+  }
+  ngOnInit() {
+    // this.differ = this.differs.find(this.tableData);
+    // console.log(this.differ, 'in inittttttttt>>>>');
+  }
+
+  ngDoCheck() {
+    // if (this.tableData) {
+    //   this.tableData.map((data) => {
+    //     setTimeout(() => {
+    //       if (data.downBuy) {
+    //         data.downBuy = false;
+    //       }
+    //       if (data.downSell) {
+    //         data.downSell = false;
+    //       }
+    //       if (data.upSell) {
+    //         data.upSell = false;
+    //       }
+    //       if (data.upBuy) {
+    //         data.upBuy = false;
+    //       }
+    //     }, 100);
+    //     this.dataSource.data = this.tableData;
+    //   });
+    // }
   }
 
   ngOnChanges(changes: any) {
@@ -67,14 +97,49 @@ export class DataTableComponent implements OnChanges, AfterViewInit {
     });
   }
 
+  private getDiff(oldData, newData) {
+    if (oldData && newData) {
+      newData.upBuy = false;
+      newData.upSell = false;
+      newData.downBuy = false;
+      newData.downSell = false;
+      oldData.map((data) => {
+        if (data.name  === newData.name) {
+          if (parseFloat(data.buy) < parseFloat(newData.buy)) {
+            newData.downBuy = false;
+            return newData.upBuy = true;
+          } else if (parseFloat(data.buy) > parseFloat(newData.buy)) {
+            newData.upBuy = false;
+            return newData.downBuy = true;
+          }
+          if (parseFloat(data.sell) < parseFloat(newData.sell)) {
+            newData.downSell = false;
+            return newData.upSell = true;
+          } else if (parseFloat(data.sell) > parseFloat(newData.sell)) {
+            newData.upSell = false;
+            return newData.downSell = true;
+          }
+        }
+      });
+    } else {
+      newData.up = false;
+      newData.down = false;
+    }
+  }
+
   private transformCoinOme(key, res) {
     const keySpec = `${key}-inr`;
+    const oldData = this.dataSource.data;
+    console.log(this.dataSource.data, 'data soyrceee>>>');
+    // console.log(tempData)
     const tempData: any = {};
     if (res.data !== null && res.data[keySpec]) {
       tempData.buy = res.data[keySpec].lowest_ask;
       tempData.sell = res.data[keySpec].highest_bid;
       tempData.name = 'CoinOme';
       tempData.redirect = 'https://www.coinome.com/';
+      this.getDiff(oldData, tempData);
+      console.log(tempData, 'tempData>>>>');
       return this.tableData.push(tempData);
     }
   }
@@ -90,6 +155,7 @@ export class DataTableComponent implements OnChanges, AfterViewInit {
           tempData.sell = data[upperKey].sellPrice;
           tempData.name = 'BitBns';
           tempData.redirect = 'https://bitbns.com/';
+          this.getDiff(this.dataSource.data, tempData);
           return this.tableData.push(tempData);
         }
       });
@@ -110,6 +176,7 @@ export class DataTableComponent implements OnChanges, AfterViewInit {
       tempData.sell = res.data.body.rates[sellRate];
       tempData.name = 'PocketBits';
       tempData.redirect = 'https://pocketbits.in/';
+      this.getDiff(this.dataSource.data, tempData);
       return this.tableData.push(tempData);
     }
   }
@@ -124,6 +191,7 @@ export class DataTableComponent implements OnChanges, AfterViewInit {
           tempData.sell = data.Ask;
           tempData.name = 'Coin Delta';
           tempData.redirect = 'https://coindelta.com/market?active=BTC-INR';
+          this.getDiff(this.dataSource.data, tempData);
           return this.tableData.push(tempData);
         }
       });
@@ -137,6 +205,7 @@ export class DataTableComponent implements OnChanges, AfterViewInit {
       tempData.sell = tempData.buy - (tempData.buy * 0.01);
       tempData.name = 'Crypto Compare';
       tempData.redirect = 'https://www.cryptocompare.com/';
+      this.getDiff(this.dataSource.data, tempData);
       return this.tableData.push(tempData);
     }
   }
@@ -150,6 +219,7 @@ export class DataTableComponent implements OnChanges, AfterViewInit {
           tempData.sell = tempData.buy - (tempData.buy * 0.01);
           tempData.name = 'Coin Market';
           tempData.redirect = 'https://coinmarketcap.com/';
+          this.getDiff(this.dataSource.data, tempData);
           return this.tableData.push(tempData);
         }
       });
@@ -163,6 +233,7 @@ export class DataTableComponent implements OnChanges, AfterViewInit {
       tempData.sell = res.data.sell;
       tempData.name = 'ZebPay';
       tempData.redirect = 'https://www.zebpay.com/';
+      this.getDiff(this.dataSource.data, tempData);
       return this.tableData.push(tempData);
     }
   }
@@ -174,6 +245,7 @@ export class DataTableComponent implements OnChanges, AfterViewInit {
       tempData.sell = res.data.ask * 70;
       tempData.name = 'Bit Stamp';
       tempData.redirect = 'https://www.bitstamp.net/';
+      this.getDiff(this.dataSource.data, tempData);
       return this.tableData.push(tempData);
     }
   }
@@ -185,6 +257,7 @@ export class DataTableComponent implements OnChanges, AfterViewInit {
       tempData.sell = res.data.data.price[0].sell_price;
       tempData.name = 'ThroughBit';
       tempData.redirect = 'https://www.throughbit.com/';
+      this.getDiff(this.dataSource.data, tempData);
       return this.tableData.push(tempData);
     }
   }
@@ -204,6 +277,7 @@ export class DataTableComponent implements OnChanges, AfterViewInit {
           }else if (data.market === 'Exmo') {
             tempData.redirect = 'https://exmo.com/';
           }
+          this.getDiff(this.dataSource.data, tempData);
           return this.tableData.push(tempData);
         }else {
           return;
@@ -224,8 +298,9 @@ export class DataTableComponent implements OnChanges, AfterViewInit {
       if (data[keyBuy] !== null) {
         tempData.buy = data[keyBuy];
         tempData.sell = data[keySell];
-        tempData.name = 'Buy U Coin';
+        tempData.name = 'BuyUcoin';
         tempData.redirect = 'https://www.buyucoin.com/';
+        this.getDiff(this.dataSource.data, tempData);
         return this.tableData.push(tempData);
       }
     }
@@ -241,6 +316,7 @@ export class DataTableComponent implements OnChanges, AfterViewInit {
         tempData.sell = data.highest_bid;
         tempData.name = 'Koinex';
         tempData.redirect = 'https://koinex.in/';
+        this.getDiff(this.dataSource.data, tempData);
         return this.tableData.push(tempData);
       }
     }
