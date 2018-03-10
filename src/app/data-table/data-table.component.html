@@ -10,13 +10,13 @@
     <!-- Buy Column -->
     <ng-container matColumnDef="buy">
       <mat-header-cell *matHeaderCellDef mat-sort-header class="table-header"><strong> Buy Rate </strong></mat-header-cell>
-      <mat-cell [ngClass]="{'downBuy': element.downBuy === true, 'upBuy': element.upBuy === true }" *matCellDef="let element"> {{element.buy | number:'.3-3'}} </mat-cell>
+      <mat-cell class="rate-adjust" [ngClass]="{'downBuy': element.downBuy === true, 'upBuy': element.upBuy === true }" *matCellDef="let element"> {{element.buy | number:'.3-3'}} </mat-cell>
     </ng-container>
 
     <!-- Sell Column --> 
     <ng-container matColumnDef="sell">
       <mat-header-cell *matHeaderCellDef mat-sort-header class="table-header"><strong> Sell Rate </strong></mat-header-cell>
-      <mat-cell [ngClass]="{'downSell': element.downSell === true, 'upSell': element.upSell === true }" *matCellDef="let element"> {{element.sell | number:'.3-3'}} </mat-cell>
+      <mat-cell class="rate-adjust" [ngClass]="{'downSell': element.downSell === true, 'upSell': element.upSell === true }" *matCellDef="let element"> {{element.sell | number:'.3-3'}} </mat-cell>
     </ng-container>
 
     <mat-header-row  *matHeaderRowDef="displayedColumns"></mat-header-row>
