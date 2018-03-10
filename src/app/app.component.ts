@@ -17,7 +17,6 @@ export class AppComponent implements OnInit {
   }
 
   coinClicked(key: any) {
-    console.log(key, 'gott keyyyy>>>>>');
     return this.selectedCoinKey = key.key;
   }
 }

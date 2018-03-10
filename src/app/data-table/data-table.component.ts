@@ -62,7 +62,6 @@ export class DataTableComponent implements OnChanges, AfterViewInit, DoCheck {
   ngOnChanges(changes: any) {
     this.spinnerService.show();
     this.sendBestPriceData = true;
-    this.dataSource.data = [];
     this.coinKey = changes.selectedCoin.currentValue;
     this._sharedService.allCoinObservable
     .subscribe(result => {
