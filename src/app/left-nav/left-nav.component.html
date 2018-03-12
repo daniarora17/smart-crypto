@@ -7,18 +7,19 @@
       </a>
     </li>
   </ul>
-  <!-- <div *ngIf="showIcon">
-  <button (click)="showList = !showList">
-      {{showList}}
-      <mat-icon svgIcon="menu" class="menu-icon"></mat-icon>
-    </button>
-    <ul #iconList class="left-nav-coin-list" *ngIf="showList">
-      <li class="left-nav-coin-item" *ngFor="let coin of coinList" [ngClass]="{'active': selectedItem === coin.key }">
+  <button class="menu-button" mat-button [matMenuTriggerFor]="menu">
+    <img class="selected-coin-image" [src]="selectedCoin.url">
+    <span class="selected-coin-text">{{selectedCoin.name}}</span>
+    <mat-icon svgIcon="arrow-down" class="menu-icon"></mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <ul class="menu-item">
+      <li class="menu-coin-item" *ngFor="let coin of coinList" [ngClass]="{'active': selectedItem === coin.key }">
         <a (click)="getSelectedCoin(coin)">
           <img [src]="coin.url">
           <span>{{coin.name}}</span>
         </a>
       </li>
     </ul>
-  </div> -->
+  </mat-menu>
 </div>
