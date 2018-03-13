@@ -9,10 +9,7 @@ import { SharedServiceService } from '../shared-service.service';
 export class LeftNavComponent implements OnInit {
   @Output() coinClicked = new EventEmitter<any>();
   selectedItem: String;
-  // computedWidth: Number;
-  // showIcon: Boolean;
-  // showList: Boolean = false;
-  // @ViewChild('iconList') iconList: ElementRef;
+  selectedCoin: any;
   coinList: Array<any> = [
     {
       'key': 'btc',
@@ -65,24 +62,13 @@ export class LeftNavComponent implements OnInit {
 
   ngOnInit() {
     this.selectedItem = 'btc';
+    this.selectedCoin = this.coinList[0];
   }
-
-  // ngAfterViewChecked() {
-  //   if (this.iconList) {
-  //     this.computedWidth = this.iconList.nativeElement.offsetWidth;
-  //     setTimeout(() => {
-  //       if (this.computedWidth < 500) {
-  //         this.showIcon = true;
-  //       } else {
-  //         this.showIcon = false;
-  //       }
-  //     });
-  //   }
-  // }
 
   getSelectedCoin = (coin) => {
     this.coinClicked.emit(coin);
     this._sharedService.setCoinKey(coin.key);
     this.selectedItem = coin.key;
+    this.selectedCoin = coin;
   }
 }

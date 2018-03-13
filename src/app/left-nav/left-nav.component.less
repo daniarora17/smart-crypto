@@ -3,7 +3,9 @@
     background-color: #79c6d1;
     margin-bottom: 10px;
     width: 100%;
-    
+    .menu-button{
+        display: none;
+    }
     .left-nav-title {
         color: #5c5c7d;
         font-size: 10px;
@@ -39,23 +41,24 @@
     padding: 1px 10px;
     border-radius: 10px;
     box-shadow: 1px 2px 3px 1px #666;
+    width: fit-content;
 
     span {
         color: #f1edea;
     }
 }
 
-// @media only screen and (max-width: 500px) {
-//     .left-nav-main {
-//         .left-nav-coin-list {
-//             display: block;
-//             .left-nav-coin-item {
-//                 margin-bottom: 5px;
-//             }
-//         }
-//     }
-
-//     .active {
-//         width: fit-content;
-//     }
-// }
+@media only screen and (max-width: 600px) {
+    .left-nav-main {
+        height: 50px;
+        .left-nav-coin-list {
+            display: none;
+        }
+        .menu-button {
+            display: flex;
+            padding: 7px 0px 0px 15px;
+        }
+        
+           
+    }
+}

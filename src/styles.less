@@ -12,3 +12,44 @@ a.mat-menu-item > mat-icon {
   height: 24px;
   width: 24px;
 }
+
+.menu-button {
+  .mat-button-focus-overlay  {
+    background-color: transparent;
+  }
+  .selected-coin-image, .selected-coin-text {
+    vertical-align: middle;
+    color: #686b6b;
+  }
+  svg {
+    margin-left: -9px;
+    margin-top: 1px;
+    fill: #686b6b;
+  }
+}
+
+.mat-menu-panel {
+  background-color: #0fc4ded9;
+  .mat-menu-content {
+    padding-top: 0px;
+    padding-bottom: 0px;
+
+    .menu-item {
+      list-style: none;
+      margin-top: 10px;
+      margin-left: 10px;
+      padding: 0;
+
+      .menu-coin-item {
+        margin-bottom: 10px; 
+        margin-right: 10px; 
+        cursor: pointer;
+      }
+
+      .menu-coin-item a img, .menu-coin-item a span {
+        vertical-align: middle;
+      }
+    }
+  }
+
+}

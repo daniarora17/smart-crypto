@@ -1,6 +1,6 @@
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatIconRegistry, MatIconModule, MatTableModule, MatSortModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatIconRegistry, MatIconModule, MatTableModule, MatSortModule, MatMenuModule, MatButtonModule } from '@angular/material';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -32,9 +32,10 @@ import { FooterComponent } from './footer/footer.component';
     HttpClientModule,
     MatTableModule,
     MatSortModule,
-    MatProgressSpinnerModule,
     BrowserAnimationsModule,
-    Ng4LoadingSpinnerModule.forRoot()
+    Ng4LoadingSpinnerModule.forRoot(),
+    MatMenuModule,
+    MatButtonModule
   ],
   providers: [SharedServiceService],
   bootstrap: [AppComponent]
